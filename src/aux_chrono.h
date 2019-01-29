@@ -29,7 +29,14 @@ std::ostream & operator << (std::ostream & stream, std::chrono::high_resolution_
     return stream;
 }
 
-int random (int l, int u)
+int randint (int l, int u)
+{
+    static std::random_device seed;
+    static std::mt19937 generator (seed ());
+    return(int)(u-l == 1 ? l : generator () % ((int64_t) u-l+1) + l);
+}
+
+int default_randint (int l, int u)
 {
     static Time t;
     static auto seed = (unsigned) t.stamp.time_since_epoch ().count ();
@@ -37,12 +44,24 @@ int random (int l, int u)
     return std::uniform_int_distribution<int> (l, u) (generator);
 }
 
-TEST_ON
+TEST_OFF
 {
     for (int i=0; i<9; i++)
     {
-        auto ms = random (0, 9);
+        auto ms = randint (0, 9);
         Time t0; std::this_thread::sleep_for (std::chrono::milliseconds (ms));
         Time t1; cout <<"sleep for " << ms << " ms takes " << t1-t0 << " sec" << endl;
     }
 };
+
+// Possible output:
+//
+// sleep for 5 ms takes 0.005'667'184 sec
+// sleep for 1 ms takes 0.001'792'856 sec
+// sleep for 6 ms takes 0.006'372'092 sec
+// sleep for 0 ms takes 0.000'003'695 sec
+// sleep for 0 ms takes 0.000'002'463 sec
+// sleep for 8 ms takes 0.008'963'871 sec
+// sleep for 5 ms takes 0.005'483'258 sec
+// sleep for 4 ms takes 0.004'027'460 sec
+// sleep for 6 ms takes 0.006'332'679 sec

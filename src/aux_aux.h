@@ -6,6 +6,7 @@
 // Macro __COUNTER__ is non-standard but widely supported.
 
 #include <string>
+#include <cassert>   
 #include <iomanip>
 #include <iostream>
 #define cout std::cout
@@ -18,7 +19,7 @@ struct FILENAME
 
 struct TESTCLASS
 {
-    template<class Lambda> TESTCLASS (Lambda test)
+    template<class Test> TESTCLASS (Test test)
     {
         cout << endl << FILENAME::TEXT << endl << endl; test ();
     }
@@ -27,17 +28,18 @@ struct TESTCLASS
 #define CONCAt(x,y)   x##y
 #define CONCAT(x,y)   CONCAt (x,y)
 
-#define TEST FILENAME CONCAT (Test,__COUNTER__) = __FILE__; TESTCLASS
+#define TEST_OFF auto      CONCAT (Test,__COUNTER__) = []()
+#define TEST_ON  FILENAME  CONCAT (Test,__COUNTER__) = __FILE__; \
+                 TESTCLASS CONCAT (Test,__COUNTER__) = []()
 
-#define TEST_ON  TEST CONCAT (Test,__COUNTER__) = []()
+#define TESt(...) { cout << #__VA_ARGS__ << " >>> ";   __VA_ARGS__; }
+#define TEST(...) { cout << #__VA_ARGS__ << " >>> " << __VA_ARGS__ << endl; }
 
-#define TEST_OFF auto CONCAT (Test,__COUNTER__) = []()
-
-TEST_ON
+TEST_OFF
 {
-    cout << "Test how test works." << endl;
+    TEST (        "Test how test works."); cout << endl;
+    TESt (cout << "Test how test works."); cout << endl;
 };
 
-
-#include "aux_log.h"
 #include "aux_chrono.h"
+#include "aux_log.h"

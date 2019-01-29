@@ -124,6 +124,20 @@
     <ClInclude Include="src\aux_aux.h" />
     <ClInclude Include="src\aux_chrono.h" />
     <ClInclude Include="src\aux_log.h" />
+    <ClInclude Include="src\cpp_algo.h" />
+    <ClInclude Include="src\cpp_algo_rotate.h" />
+    <ClInclude Include="src\cpp_math.h" />
+    <ClInclude Include="src\cpp_meta.h" />
+    <ClInclude Include="src\cpp_meta_abc.h" />
+    <ClInclude Include="src\cpp_meta_move.h" />
+    <ClInclude Include="src\cpp_sort.h" />
+    <ClInclude Include="src\cpp_sort_classical.h" />
+    <ClInclude Include="src\cpp_sort_counting.h" />
+    <ClInclude Include="src\cpp_sort_heapsort.h" />
+    <ClInclude Include="src\cpp_sort_partial.h" />
+    <ClInclude Include="src\cpp_sort_quicksort.h" />
+    <ClInclude Include="src\cpp_sort_sleepsort.h" />
+    <ClInclude Include="src\cpp_sort_stable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
