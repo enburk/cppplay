@@ -1,6 +1,7 @@
 #include <chrono>
 #include <random>
 #include <thread>
+using namespace std::chrono_literals;
 
 struct Time
 {
@@ -29,11 +30,11 @@ std::ostream & operator << (std::ostream & stream, std::chrono::high_resolution_
     return stream;
 }
 
-int randint (int l, int u)
+int randint (int l, int u) // thread-unsafe
 {
     static std::random_device seed;
-    static std::mt19937 generator (seed ());
-    return(int)(u-l == 1 ? l : generator () % ((int64_t) u-l+1) + l);
+    static std::mt19937 generator (seed ()); // should be thread-local
+    return std::uniform_int_distribution<int> (l, u) (generator);
 }
 
 int default_randint (int l, int u)

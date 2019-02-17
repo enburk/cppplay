@@ -1,23 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="src\aux_aux.h" />
-    <ClInclude Include="src\aux_chrono.h" />
-    <ClInclude Include="src\aux_log.h" />
-    <ClInclude Include="src\cpp_sort_quicksort.h" />
-    <ClInclude Include="src\cpp_sort_sleepsort.h" />
-    <ClInclude Include="src\cpp_sort_partial.h" />
-    <ClInclude Include="src\cpp_sort_stable.h" />
-    <ClInclude Include="src\cpp_sort.h" />
-    <ClInclude Include="src\cpp_sort_classical.h" />
-    <ClInclude Include="src\cpp_algo.h" />
-    <ClInclude Include="src\cpp_algo_rotate.h" />
-    <ClInclude Include="src\cpp_sort_counting.h" />
-    <ClInclude Include="src\cpp_sort_heapsort.h" />
-    <ClInclude Include="src\cpp_math.h" />
-    <ClInclude Include="src\cpp_meta.h" />
-    <ClInclude Include="src\cpp_meta_abc.h" />
-    <ClInclude Include="src\cpp_meta_move.h" />
+    <ClInclude Include="include\aux_aux.h" />
+    <ClInclude Include="include\aux_chrono.h" />
+    <ClInclude Include="include\aux_log.h" />
+    <ClInclude Include="include\cpp_algo.h" />
+    <ClInclude Include="include\cpp_algo_rotate.h" />
+    <ClInclude Include="include\cpp_data.h" />
+    <ClInclude Include="include\cpp_data_array.h" />
+    <ClInclude Include="include\cpp_data_array_aux.h" />
+    <ClInclude Include="include\cpp_data_array_on_heap.h" />
+    <ClInclude Include="include\cpp_data_array_on_heap_aux.h" />
+    <ClInclude Include="include\cpp_data_array_on_stack.h" />
+    <ClInclude Include="include\cpp_math.h" />
+    <ClInclude Include="include\cpp_meta.h" />
+    <ClInclude Include="include\cpp_meta_abc.h" />
+    <ClInclude Include="include\cpp_meta_move.h" />
+    <ClInclude Include="include\cpp_meta_xvalue.h" />
+    <ClInclude Include="include\cpp_nums.h" />
+    <ClInclude Include="include\cpp_nums_uint.h" />
+    <ClInclude Include="include\cpp_sort.h" />
+    <ClInclude Include="include\cpp_sort_classical.h" />
+    <ClInclude Include="include\cpp_sort_counting.h" />
+    <ClInclude Include="include\cpp_sort_heapsort.h" />
+    <ClInclude Include="include\cpp_sort_partial.h" />
+    <ClInclude Include="include\cpp_sort_quicksort.h" />
+    <ClInclude Include="include\cpp_sort_sleepsort.h" />
+    <ClInclude Include="include\cpp_sort_stable.h" />
+    <ClInclude Include="include\cpp_sync.h" />
+    <ClInclude Include="include\cpp_sync_coroutines.h" />
+    <ClInclude Include="include\cpp_trap.h" />
+    <ClInclude Include="include\cpp_sync_rcu.h" />
+    <ClInclude Include="include\lib_boost_interprocess.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

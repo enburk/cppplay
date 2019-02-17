@@ -7,9 +7,9 @@ template <class type> void quicksort (std::vector<type> & v, int l, int u) // Jo
     quicksort (v, l, m-1);
     quicksort (v, m+1, u);
 }
-template <class type> void quicksort (std::vector<type> & v) { quicksort (v, 0, v.size () - 1); } 
+template <class type> void quicksort (std::vector<type> & v) { quicksort (v, 0, (int) v.size () - 1); } 
 
-TEST_ON
+TEST_OFF
 {
     {
         std::vector<int> v0; for (int i=0; i<25; i++) v0.push_back (randint (10, 99));
@@ -27,7 +27,7 @@ TEST_ON
         cout << endl;
     }
     {
-        std::vector<int> v0; for (int i=0; i<1'000'000; i++) v0.push_back (randint (0, v0.size ()));
+        std::vector<int> v0; for (int i=0; i<1'000'000; i++) v0.push_back (randint (0, (int) v0.size ()));
         std::vector<int> v1 = v0, v2 = v0, v3 = v0;
 
         Time t0; quicksort (v1);

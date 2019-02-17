@@ -20,7 +20,7 @@ void naive_sort_heap (RandomIt first, RandomIt last, Compare cmp = Compare{})
 
 // https://stackoverflow.com/questions/24650626/how-to-implement-classic-sorting-algorithms-in-modern-c
 
-TEST_ON
+TEST_OFF
 {
     {
         auto v1 = random (0, 1'000'000); auto v2 = v1;

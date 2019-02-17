@@ -26,11 +26,12 @@ struct element
     element         (                   ) : s ("_") { log::put ( "ctor: " + s ); }
     element         ( char            c ) : s (1,c) { log::put ( "ctor: " + s ); }
     element         ( const element & e ) : s (e.s) { log::put ( "copy: " + s ); }
-    element         (       element&& e ) : s (std::forward<std::string>(e.s))
+    element         (       element&& e ) noexcept
+                                          : s (std::forward<std::string>(e.s))
                                                     { log::put ( "move: " + s ); }
     void operator = ( char            c )           { log::put ( "assg: " + s + "=" + c   ); s = c;   }
     void operator = ( const element & e )           { log::put ( "copy: " + s + "=" + e.s ); s = e.s; }
-    void operator = (       element&& e )           { log::put ( "move: " + s + "=" + e.s ); s = std::forward<std::string>(e.s); }
+    void operator = (       element&& e ) noexcept  { log::put ( "move: " + s + "=" + e.s ); s = std::forward<std::string>(e.s); }
 };
 
 TEST_OFF

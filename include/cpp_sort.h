@@ -25,7 +25,7 @@ namespace sort
         return v;
     }
 
-    TEST_ON
+    TEST_OFF
     {
         auto v = inputs (0, 10); for (const auto & p : v)
         {

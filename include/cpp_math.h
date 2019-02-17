@@ -55,8 +55,8 @@ TEST_OFF
     assert (v1 == v2);
     assert (v3 == v4);
 
-    int m = std::numeric_limits<int>::min ();
-    int M = std::numeric_limits<int>::max ();
+    constexpr int m = std::numeric_limits<int>::min ();
+    constexpr int M = std::numeric_limits<int>::max ();
 
     std::vector<int> extreme_m {0, 0, 0, m, m, m, M, M, M};
     std::vector<int> extreme_n {0, m, M, 0, m, M, 0, m, M};

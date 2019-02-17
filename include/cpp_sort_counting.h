@@ -9,9 +9,18 @@ template<typename ForwardIterator> void counting (ForwardIterator first, Forward
     auto max = *mm.second;
     if (min == max) return;
 
-    std::vector<std::iterator_traits<ForwardIterator>::difference_type> counts (max - min + 1, 0);
+    // warning C26451: Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value.
+    // Cast the value to the wider type before calling operator '-' to avoid overflow (io.2).
+    using type = typename std::iterator_traits<ForwardIterator>::value_type; // difference_type;
 
+    int64_t size = (int64_t) max - min + 1; assert (size <= std::numeric_limits<int32_t>::max ());
+
+    std::vector<type> counts (size, 0);
+
+    #pragma warning (push)
+    #pragma warning (disable: 26451)
     for (auto it = first ; it != last ; ++it) ++counts [*it - min];
+    #pragma warning (pop)
 
     for (auto count: counts) first = std::fill_n (first, count, min++);
 }

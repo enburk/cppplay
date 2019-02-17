@@ -18,6 +18,42 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\aux_aux.h" />
+    <ClInclude Include="include\aux_chrono.h" />
+    <ClInclude Include="include\aux_log.h" />
+    <ClInclude Include="include\cpp_algo.h" />
+    <ClInclude Include="include\cpp_algo_rotate.h" />
+    <ClInclude Include="include\cpp_data.h" />
+    <ClInclude Include="include\cpp_data_array.h" />
+    <ClInclude Include="include\cpp_data_array_aux.h" />
+    <ClInclude Include="include\cpp_data_array_on_heap.h" />
+    <ClInclude Include="include\cpp_data_array_on_heap_aux.h" />
+    <ClInclude Include="include\cpp_data_array_on_stack.h" />
+    <ClInclude Include="include\cpp_math.h" />
+    <ClInclude Include="include\cpp_meta.h" />
+    <ClInclude Include="include\cpp_meta_abc.h" />
+    <ClInclude Include="include\cpp_meta_move.h" />
+    <ClInclude Include="include\cpp_meta_xvalue.h" />
+    <ClInclude Include="include\cpp_nums.h" />
+    <ClInclude Include="include\cpp_nums_uint.h" />
+    <ClInclude Include="include\cpp_sort.h" />
+    <ClInclude Include="include\cpp_sort_classical.h" />
+    <ClInclude Include="include\cpp_sort_counting.h" />
+    <ClInclude Include="include\cpp_sort_heapsort.h" />
+    <ClInclude Include="include\cpp_sort_partial.h" />
+    <ClInclude Include="include\cpp_sort_quicksort.h" />
+    <ClInclude Include="include\cpp_sort_sleepsort.h" />
+    <ClInclude Include="include\cpp_sort_stable.h" />
+    <ClInclude Include="include\cpp_sync.h" />
+    <ClInclude Include="include\cpp_sync_coroutines.h" />
+    <ClInclude Include="include\cpp_sync_rcu.h" />
+    <ClInclude Include="include\cpp_trap.h" />
+    <ClInclude Include="include\lib_boost_interprocess.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{BF1A628A-78F1-410B-ABB8-90F6D374C2EC}</ProjectGuid>
@@ -69,7 +105,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -77,6 +120,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <OpenMPSupport>false</OpenMPSupport>
+      <EnableModules>false</EnableModules>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -88,7 +135,16 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <OpenMPSupport>false</OpenMPSupport>
+      <EnableModules>false</EnableModules>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -99,6 +155,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <OpenMPSupport>false</OpenMPSupport>
+      <EnableModules>false</EnableModules>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -114,34 +174,19 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnablePREfast>true</EnablePREfast>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <OpenMPSupport>false</OpenMPSupport>
+      <EnableModules>false</EnableModules>
+      <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="src\aux_aux.h" />
-    <ClInclude Include="src\aux_chrono.h" />
-    <ClInclude Include="src\aux_log.h" />
-    <ClInclude Include="src\cpp_algo.h" />
-    <ClInclude Include="src\cpp_algo_rotate.h" />
-    <ClInclude Include="src\cpp_math.h" />
-    <ClInclude Include="src\cpp_meta.h" />
-    <ClInclude Include="src\cpp_meta_abc.h" />
-    <ClInclude Include="src\cpp_meta_move.h" />
-    <ClInclude Include="src\cpp_sort.h" />
-    <ClInclude Include="src\cpp_sort_classical.h" />
-    <ClInclude Include="src\cpp_sort_counting.h" />
-    <ClInclude Include="src\cpp_sort_heapsort.h" />
-    <ClInclude Include="src\cpp_sort_partial.h" />
-    <ClInclude Include="src\cpp_sort_quicksort.h" />
-    <ClInclude Include="src\cpp_sort_sleepsort.h" />
-    <ClInclude Include="src\cpp_sort_stable.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
