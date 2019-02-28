@@ -3,14 +3,14 @@
 // You couldn't name your file 'aux.h' on Windows. As well as:
 // CON, PRN, NUL, COM1, COM2, ... , COM9, LPT1, LPT2, ... , LPT9.
 
-// Macro __COUNTER__ is non-standard but widely supported.
-
+#include <vector>
 #include <string>
 #include <cassert>   
 #include <iomanip>
 #include <iostream>
-#define cout std::cout
-#define endl std::endl
+
+using std::cout;
+using std::endl;
 
 struct FILENAME
 {
@@ -28,6 +28,7 @@ struct TESTCLASS
 #define CONCAt(x,y)   x##y
 #define CONCAT(x,y)   CONCAt (x,y)
 
+// Macro __COUNTER__ is non-standard but widely supported
 #define TEST_OFF auto      CONCAT (Test,__COUNTER__) = []()
 #define TEST_ON  FILENAME  CONCAT (Test,__COUNTER__) = __FILE__; \
                  TESTCLASS CONCAT (Test,__COUNTER__) = []()
@@ -41,5 +42,6 @@ TEST_OFF
     TESt (cout << "Test how test works."); cout << endl;
 };
 
-#include "aux_chrono.h"
 #include "aux_log.h"
+#include "aux_element.h"
+#include "aux_chrono.h"

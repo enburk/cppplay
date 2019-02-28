@@ -15,6 +15,7 @@ template<typename ForwardIterator> void counting (ForwardIterator first, Forward
 
     int64_t size = (int64_t) max - min + 1; assert (size <= std::numeric_limits<int32_t>::max ());
 
+    // x86 : warning C4244: 'argument': conversion from 'int64_t' to 'const unsigned int', possible loss of data
     std::vector<type> counts (size, 0);
 
     #pragma warning (push)

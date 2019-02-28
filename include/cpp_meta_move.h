@@ -3,7 +3,7 @@ namespace test
     template<class T> struct remove_reference      { using type = T; }; // remove reference
     template<class T> struct remove_reference<T&>  { using type = T; }; // remove reference
     template<class T> struct remove_reference<T&&> { using type = T; }; // remove rvalue reference
-    template<class T> using  remove_reference_t = typename remove_reference<T>::type;
+    template<class T> using  remove_reference_t    = typename remove_reference<T>::type;
 
     template<class T> struct is_lvalue_reference     : false_type {};
     template<class T> struct is_lvalue_reference<T&> : true_type  {};
@@ -24,7 +24,7 @@ namespace test
     }
 }
 
-TEST_ON
+TEST_OFF
 {
     {
         auto f1 = [](element &  e) { return test::forward<element> (e); };
@@ -54,4 +54,32 @@ TEST_ON
     }
 
     log::print ();
+
+    // test::forward<element&> ('a'); // static_assert: bad forward call
 };
+
+// Scott Meyers, The Universal Reference/Overloading Collision Conundrum [NWCPP 2013]
+
+template<typename T>
+void foo_impl( T && t, std::true_type )
+  {/* LVALUES HERE */}
+
+template<typename T>
+void foo_impl( T && t, std::false_type )
+  {/* RVALUES HERE */}
+
+template<typename T>
+void foo( T && t )
+{
+    foo_impl( std::forward<T>(t),
+              std::is_lvalue_reference<T>() );
+}
+
+// http://scottmeyers.blogspot.com/2013/05/c14-lambdas-and-perfect-forwarding.html
+
+auto forwardingLambda1 = [](auto&& param) {
+  f(std::forward<std::conditional<std::is_rvalue_reference<decltype(param)>::value,
+                                  std::remove_reference<decltype(param)>::type,
+                                  decltype(param)>::type>(param));
+};
+auto forwardingLambda2 = [](auto&& param) { f(std::forward<decltype(param)>(param)); };

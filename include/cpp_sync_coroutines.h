@@ -52,7 +52,7 @@ auto binary_search (Iterator first, Iterator last, Value value, Found on_found, 
     co_return on_not_found (value);
 }
 
-TEST_ON
+TEST_OFF
 {
     for (char c : hello ()) cout << c;
 

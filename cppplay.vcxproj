@@ -21,15 +21,21 @@
   <ItemGroup>
     <ClInclude Include="include\aux_aux.h" />
     <ClInclude Include="include\aux_chrono.h" />
+    <ClInclude Include="include\aux_element.h" />
     <ClInclude Include="include\aux_log.h" />
     <ClInclude Include="include\cpp_algo.h" />
     <ClInclude Include="include\cpp_algo_rotate.h" />
     <ClInclude Include="include\cpp_data.h" />
+    <ClInclude Include="include\cpp_data_access.h" />
+    <ClInclude Include="include\cpp_data_alignment.h" />
     <ClInclude Include="include\cpp_data_array.h" />
     <ClInclude Include="include\cpp_data_array_aux.h" />
     <ClInclude Include="include\cpp_data_array_on_heap.h" />
     <ClInclude Include="include\cpp_data_array_on_heap_aux.h" />
     <ClInclude Include="include\cpp_data_array_on_stack.h" />
+    <ClInclude Include="include\cpp_data_inheritance.h" />
+    <ClInclude Include="include\cpp_data_inheritance_crtp.h" />
+    <ClInclude Include="include\cpp_data_smart_ptr.h" />
     <ClInclude Include="include\cpp_math.h" />
     <ClInclude Include="include\cpp_meta.h" />
     <ClInclude Include="include\cpp_meta_abc.h" />
@@ -47,8 +53,17 @@
     <ClInclude Include="include\cpp_sort_stable.h" />
     <ClInclude Include="include\cpp_sync.h" />
     <ClInclude Include="include\cpp_sync_coroutines.h" />
+    <ClInclude Include="include\cpp_sync_memory_order.h" />
+    <ClInclude Include="include\cpp_sync_queue.h" />
     <ClInclude Include="include\cpp_sync_rcu.h" />
+    <ClInclude Include="include\cpp_sync_signal.h" />
+    <ClInclude Include="include\cpp_sync_spinlock.h" />
+    <ClInclude Include="include\cpp_sync_thread_local.h" />
     <ClInclude Include="include\cpp_trap.h" />
+    <ClInclude Include="include\cpp_trap_decltype.h" />
+    <ClInclude Include="include\cpp_trap_forward.h" />
+    <ClInclude Include="include\cpp_trap_references.h" />
+    <ClInclude Include="include\cpp_trap_shadowing.h" />
     <ClInclude Include="include\lib_boost_interprocess.h" />
   </ItemGroup>
   <ItemGroup>

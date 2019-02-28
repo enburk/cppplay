@@ -30,10 +30,10 @@ std::ostream & operator << (std::ostream & stream, std::chrono::high_resolution_
     return stream;
 }
 
-int randint (int l, int u) // thread-unsafe
+int randint (int l, int u)
 {
-    static std::random_device seed;
-    static std::mt19937 generator (seed ()); // should be thread-local
+    thread_local std::random_device seed;
+    thread_local std::mt19937 generator (seed ());
     return std::uniform_int_distribution<int> (l, u) (generator);
 }
 

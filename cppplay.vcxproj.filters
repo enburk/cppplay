@@ -32,6 +32,21 @@
     <ClInclude Include="include\cpp_trap.h" />
     <ClInclude Include="include\cpp_sync_rcu.h" />
     <ClInclude Include="include\lib_boost_interprocess.h" />
+    <ClInclude Include="include\cpp_sync_memory_order.h" />
+    <ClInclude Include="include\cpp_sync_queue.h" />
+    <ClInclude Include="include\cpp_trap_shadowing.h" />
+    <ClInclude Include="include\cpp_trap_decltype.h" />
+    <ClInclude Include="include\cpp_trap_forward.h" />
+    <ClInclude Include="include\cpp_sync_signal.h" />
+    <ClInclude Include="include\cpp_data_alignment.h" />
+    <ClInclude Include="include\aux_element.h" />
+    <ClInclude Include="include\cpp_trap_references.h" />
+    <ClInclude Include="include\cpp_data_access.h" />
+    <ClInclude Include="include\cpp_sync_spinlock.h" />
+    <ClInclude Include="include\cpp_data_inheritance.h" />
+    <ClInclude Include="include\cpp_data_inheritance_crtp.h" />
+    <ClInclude Include="include\cpp_data_smart_ptr.h" />
+    <ClInclude Include="include\cpp_sync_thread_local.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

@@ -32,3 +32,17 @@ void foo(int&& t) {
   // t is initialized with an rvalue expression
   // but is actually an lvalue expression itself
 }
+
+// Scott Meyers, The Universal Reference/Overloading Collision Conundrum [NWCPP 2013]
+
+template<typename T> void f (T&& param);
+
+TEST_OFF
+{
+    T v; const T c;
+
+    f (v);           // param's type is T &
+    f (c);           // param's type is const T &
+    f (std::move(v); // param's type is T &&
+    f (std::move(c); // param's type is const T &&
+}

@@ -72,7 +72,7 @@ bool mainGtI (int32_t i1, int32_t i2, uint8_t* block) // int32_t insted of uint3
 //  	cmp	al, cl
 //  	jne	SHORT $LN5@mainGtI
 
-TEST_ON
+TEST_OFF
 {
     std::vector<uint8_t> v (256); std::iota (v.begin (), v.end (), 0);
 

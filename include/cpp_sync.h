@@ -1,5 +1,6 @@
 #pragma once
 #include "aux_aux.h"
+#include <csignal>
 #include <future>
 #include <thread>
 #include <mutex>
@@ -12,32 +13,17 @@
 
 namespace sync
 {
+    #include "cpp_sync_memory_order.h"
+    #include "cpp_sync_queue.h"
+    #include "cpp_sync_rcu.h"
+    #include "cpp_sync_spinlock.h"
+    #include "cpp_sync_thread_local.h"
+    #include "cpp_sync_signal.h"
+
     #if (_MSC_VER >= 1915)
     #include "cpp_sync_coroutines.h"
     #endif
-
-    template<typename T> class SynchronizedQueue
-    {
-        std::queue<T> q; std::mutex m; std::condition_variable cv;
-    
-        public:
-    
-        T pop ()
-        {
-            std::unique_lock<std::mutex> lock (m);
-
-            while (q.empty()) cv.wait(lock);
-
-		    T t = q.top (); q.pop (); return t;
-        }
-    
-        void push (const T & t)
-        {
-            std::lock_guard<std::mutex> lock (m);
-        
-            q.push (t);
-        
-            cv.notify_one();
-        }
-    };
 }
+
+// sequentional consistency (SC) behaviour
+// data-race-freedom (DRF) guarantee
