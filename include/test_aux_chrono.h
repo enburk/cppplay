@@ -40,7 +40,6 @@ inline int randint (int l, int u)
 // thread_local specifier implies the static specifier
 // https://stackoverflow.com/questions/185624/static-variables-in-an-inlined-function
 // A static local variable in an extern inline function always refers to the same object.
-// 7.1.2/4 - C++98/C++14 (n3797)
 
 TEST_ON
 {

@@ -80,10 +80,12 @@ namespace trap
 
 
     // Function Default Arguments - Slingshot or Shotgun by Michael Price [CppCon 2017]
-    string fn (string s = "foo", bool b = true) { return (b) ? s : ""; }
+    std::string fn (std::string s = "foo", bool b = true) { return (b) ? s : ""; }
 
     TEST_ON
     {
+        using std::string;
+
         assert(fn() == "foo");
         {
             string fn (string, bool); // Hides previous DFAs!!!
@@ -100,7 +102,7 @@ namespace trap
 
     struct Base
     {
-        virtual string fn (string s = "foo")
+        virtual std::string fn (std::string s = "foo")
         {
             return s;
         }
@@ -108,7 +110,7 @@ namespace trap
 
     struct Derived : Base
     {
-        virtual string fn (string s = "bar") override
+        virtual std::string fn (std::string s = "bar") override
         {
             return s + "!!!";
         }

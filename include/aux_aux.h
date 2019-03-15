@@ -15,31 +15,35 @@
 using std::cout;
 using std::endl;
 
-struct FILENAME
+namespace detail
 {
-    inline static std::string TEXT;
-    FILENAME (const char * s) { TEXT = s; }
-};
-
-struct TESTCLASS
-{
-    template<class Test> TESTCLASS (Test test)
+    struct Filename
     {
-        cout << endl << FILENAME::TEXT << endl << endl;  test ();
-    }
-};
+        inline static std::string text;
+        Filename (const char * s) { text = s; }
+    };
+
+    struct TestClass
+    {
+        template<class Test> TestClass (Test test)
+        {
+            cout << endl << Filename::text << endl << endl;
+            test ();
+        }
+    };
+}
 
 #define CONCAt(x,y) x##y
 #define CONCAT(x,y) CONCAt (x,y)
 
-#define TEST_OFF auto      CONCAT (Test,__COUNTER__) = []()
-#define TEST_ON  FILENAME  CONCAT (Test,__COUNTER__) = __FILE__; \
-                 TESTCLASS CONCAT (Test,__COUNTER__) = []()
+#define TEST_OFF auto                     CONCAT (Test,__COUNTER__) = []()
+#define TEST_ON  inline detail::Filename  CONCAT (Test,__COUNTER__) = __FILE__; \
+                 inline detail::TestClass CONCAT (Test,__COUNTER__) = []()
 
 #define TESt(...) { cout << #__VA_ARGS__ << " >>> ";   __VA_ARGS__; }
 #define TEST(...) { cout << #__VA_ARGS__ << " >>> " << __VA_ARGS__ << endl; }
 
-TEST_OFF
+TEST_ON
 {
     TEST (        "Test how test works."); cout << endl;
     TESt (cout << "Test how test works."); cout << endl;

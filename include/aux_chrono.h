@@ -7,19 +7,20 @@ struct Time
 {
     // auto stamp = std::chrono::high_resolution_clock::now ();
     // a non-static data member cannot have a type that contains 'auto'
-
     decltype (std::chrono::high_resolution_clock::now ())
     stamp  =  std::chrono::high_resolution_clock::now ();
 
-    friend auto operator - (Time t1, Time t0) { return t1.stamp - t0.stamp; }
+    friend auto operator - (Time t1, Time t0)
+        { return t1.stamp - t0.stamp; }
 };
 
-std::ostream & operator << (std::ostream & stream, std::chrono::high_resolution_clock::duration duration)
+inline std::ostream & operator << (std::ostream & stream, std::chrono::high_resolution_clock::duration duration)
 {
-    auto seconds      = std::chrono::duration_cast<std::chrono::seconds     >(duration); duration -= seconds;
-    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration); duration -= milliseconds;
-    auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(duration); duration -= microseconds;
-    auto nanoseconds  = std::chrono::duration_cast<std::chrono::nanoseconds >(duration);
+    using std::chrono:: duration_cast;
+    auto seconds      = duration_cast<std::chrono::seconds     >(duration); duration -= seconds;
+    auto milliseconds = duration_cast<std::chrono::milliseconds>(duration); duration -= milliseconds;
+    auto microseconds = duration_cast<std::chrono::microseconds>(duration); duration -= microseconds;
+    auto nanoseconds  = duration_cast<std::chrono::nanoseconds >(duration);
 
     stream.fill ('0');
     stream           << seconds     .count () << "."
@@ -30,12 +31,15 @@ std::ostream & operator << (std::ostream & stream, std::chrono::high_resolution_
     return stream;
 }
 
-int randint (int l, int u)
+inline int randint (int l, int u)
 {
     thread_local std::random_device seed;
     thread_local std::mt19937 generator (seed ());
     return std::uniform_int_distribution<int> (l, u) (generator);
 }
+// thread_local specifier implies the static specifier
+// https://stackoverflow.com/questions/185624/static-variables-in-an-inlined-function
+// A static local variable in an extern inline function always refers to the same object.
 
 int default_randint (int l, int u)
 {
