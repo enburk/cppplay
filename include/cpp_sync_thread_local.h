@@ -27,12 +27,12 @@ namespace sync_thread_local // https://en.cppreference.com/w/cpp/language/storag
         cout << "thread local string updated externally (thread " << thread_name << ")" << endl;
     }
  
-    TEST_OFF
+    TEST_ON
     {
         std::thread a (increase, "a");
         std::thread b (increase, "b");
         {
-            std::unique_lock<std::mutex> lock (mutex);
+            std::unique_lock lock (mutex); // <std::mutex>
             while (smap.size () != 2) cv.wait (lock);
             *smap ["a"] = "a";
             *smap ["b"] = "b";

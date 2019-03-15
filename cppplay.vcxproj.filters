@@ -7,11 +7,6 @@
     <ClInclude Include="include\cpp_algo.h" />
     <ClInclude Include="include\cpp_algo_rotate.h" />
     <ClInclude Include="include\cpp_data.h" />
-    <ClInclude Include="include\cpp_data_array.h" />
-    <ClInclude Include="include\cpp_data_array_aux.h" />
-    <ClInclude Include="include\cpp_data_array_on_heap.h" />
-    <ClInclude Include="include\cpp_data_array_on_heap_aux.h" />
-    <ClInclude Include="include\cpp_data_array_on_stack.h" />
     <ClInclude Include="include\cpp_math.h" />
     <ClInclude Include="include\cpp_meta.h" />
     <ClInclude Include="include\cpp_meta_abc.h" />
@@ -47,8 +42,27 @@
     <ClInclude Include="include\cpp_data_inheritance_crtp.h" />
     <ClInclude Include="include\cpp_data_smart_ptr.h" />
     <ClInclude Include="include\cpp_sync_thread_local.h" />
+    <ClInclude Include="include\cpp_trap_sql.h" />
+    <ClInclude Include="include\cpp_meta_scope_guard.h" />
+    <ClInclude Include="include\cpp_sync_exceptions.h" />
+    <ClInclude Include="include\cpp_math_fibonacci.h" />
+    <ClInclude Include="include\cpp_sync_task_parent_2.h" />
+    <ClInclude Include="include\cpp_sync_task_parent_1.h" />
+    <ClInclude Include="include\cpp_sync_task_parent_3.h" />
+    <ClInclude Include="include\cpp_data_convert.h" />
+    <ClInclude Include="include\cpp_data_binding.h" />
+    <ClInclude Include="include\cpp_data_inheritance_is_the.h" />
+    <ClInclude Include="include\cpp_algo_stable_partition.h" />
+    <ClInclude Include="include\test_aux.h" />
+    <ClInclude Include="include\test_aux_chrono.h" />
+    <ClInclude Include="include\test_quicksort.h" />
+    <ClInclude Include="include\test_inheritance.h" />
+    <ClInclude Include="include\cpp_sync_spsc.h" />
+    <ClInclude Include="include\cpp_sync_future.h" />
+    <ClInclude Include="include\cpp_meta_traits.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="include\test.cpp" />
   </ItemGroup>
 </Project>

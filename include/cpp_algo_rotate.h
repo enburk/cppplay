@@ -110,3 +110,9 @@ TEST_OFF
 // 
 // w r
 // E D
+
+
+// CppCon 2015: Sean Parent "Better Code: Data Structures"
+// 1. rotate realisation by reverse
+// 2. reverse realisation by rotate - n log n for forward iterators
+// 3. forward iterational rotate might be faster then bidirectional and even random (because of cache)

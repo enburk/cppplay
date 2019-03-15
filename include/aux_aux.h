@@ -3,6 +3,9 @@
 // You couldn't name your file 'aux.h' on Windows. As well as:
 // CON, PRN, NUL, COM1, COM2, ... , COM9, LPT1, LPT2, ... , LPT9.
 
+// Macro __COUNTER__ is non-standard but widely supported, though can cause ODR violation:
+// https://stackoverflow.com/questions/37268686/how-can-counter-cause-a-odr-violation-here
+
 #include <vector>
 #include <string>
 #include <cassert>   
@@ -14,21 +17,21 @@ using std::endl;
 
 struct FILENAME
 {
-    inline static std::string TEXT; FILENAME (const char * s) { TEXT = s; }
+    inline static std::string TEXT;
+    FILENAME (const char * s) { TEXT = s; }
 };
 
 struct TESTCLASS
 {
     template<class Test> TESTCLASS (Test test)
     {
-        cout << endl << FILENAME::TEXT << endl << endl; test ();
+        cout << endl << FILENAME::TEXT << endl << endl;  test ();
     }
 };
 
-#define CONCAt(x,y)   x##y
-#define CONCAT(x,y)   CONCAt (x,y)
+#define CONCAt(x,y) x##y
+#define CONCAT(x,y) CONCAt (x,y)
 
-// Macro __COUNTER__ is non-standard but widely supported
 #define TEST_OFF auto      CONCAT (Test,__COUNTER__) = []()
 #define TEST_ON  FILENAME  CONCAT (Test,__COUNTER__) = __FILE__; \
                  TESTCLASS CONCAT (Test,__COUNTER__) = []()
