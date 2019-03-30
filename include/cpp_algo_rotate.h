@@ -1,6 +1,8 @@
 // possible implementation of std::rotate
 
-template<class I> I test_rotate (I first, I will_be_first, I last) // I = ForwardIterator 
+template <typename I> // ForwardIterator 
+
+auto test_rotate (I first, I will_be_first, I last) -> I
 {
    // return: first + (last - will_be_first)
 

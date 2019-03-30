@@ -26,7 +26,7 @@ TEST_OFF
 
     test_stable_partition (std::begin(a), std::end(a), [&](int i) { return i < 20; });
 
-    for (int i : a) cout << i << " "; cout << endl;
+    for (const int i : a) cout << i << " "; cout << endl;
 };
 
 template <
@@ -52,15 +52,15 @@ TEST_OFF
 {
     using namespace std;
 
-    int  a [] = { 1, 2, 3, 4, 5, 5, 4, 3, 2, 1 };
-    bool b [] = { 0, 1, 0, 1, 0, 0, 1, 0, 1, 0 };
+    vector<int > a { 1, 2, 3, 4, 5, 5, 4, 3, 2, 1 };
+    vector<bool> b { 0, 1, 0, 1, 0, 0, 1, 0, 1, 0 };
 
     auto p = test_stable_partition_position (begin(a), end(a), [&](auto i) {
         return *(begin(b) + (i - begin(a)));
     });
 
-    for (auto f = begin(a), l = p; f != l; ++f) cout << *f << " "; cout << "^ ";
-    for (auto f = p,   l = end(a); f != l; ++f) cout << *f << " "; cout << endl;
+    for (auto f = begin(a); f != p; ++f) cout << *f << " "; cout << "^ ";
+    for (auto f = p;   f != end(a); ++f) cout << *f << " "; cout << endl;
 };
 
 // template <
@@ -77,13 +77,13 @@ TEST_OFF
 {
     using namespace std;
 
-    int a [] = { 22, 11, 23, 24, 25, 12, 13, 14, 26, 27, 15, 16, 17 };
+    vector<int> a { 22, 11, 23, 24, 25, 12, 13, 14, 26, 27, 15, 16, 17 };
 
-    auto p = gather (std::begin(a), std::end(a), std::begin(a) + 6, [&](int i) { return i < 20; });
+    const auto p = gather (std::begin(a), std::end(a), std::begin(a) + 6, [&](int i) { return i < 20; });
 
-    for (auto f = begin(a), l = p.first;  f != l; ++f) cout << *f << " "; cout << "[ ";
-    for (auto f = p.first,  l = p.second; f != l; ++f) cout << *f << " "; cout << "] ";
-    for (auto f = p.second, l = end(a);   f != l; ++f) cout << *f << " "; cout << endl;
+    for (auto f = begin(a); f != p.first;  ++f) cout << *f << " "; cout << "[ ";
+    for (auto f = p.first;  f != p.second; ++f) cout << *f << " "; cout << "] ";
+    for (auto f = p.second; f != end(a);   ++f) cout << *f << " "; cout << endl;
 };
 
 TEST_OFF
@@ -102,9 +102,9 @@ TEST_OFF
 
     auto e = std::execution::par;//_unseq;
 
-    Time t0; std::stable_partition (   v1.begin(), v1.end(), [&](int i) { return i < v1.size () / 2; });
-    Time t1; std::stable_partition (e, v2.begin(), v2.end(), [&](int i) { return i < v2.size () / 2; });
-    Time t2; test_stable_partition (   v3.begin(), v3.end(), [&](int i) { return i < v3.size () / 2; });
+    Time t0; std::stable_partition (   v1.begin(), v1.end(), [&](int i) noexcept { return i < v1.size () / 2; });
+    Time t1; std::stable_partition (e, v2.begin(), v2.end(), [&](int i) noexcept { return i < v2.size () / 2; });
+    Time t2; test_stable_partition (   v3.begin(), v3.end(), [&](int i) noexcept { return i < v3.size () / 2; });
     Time t3;
 
     cout << "std::stable_partition " <<  t1-t0 << " sec" << endl;

@@ -1,6 +1,7 @@
 #include "../include/aux_aux.h"
 #include "../include/cpp_algo.h"
 #include "../include/cpp_data.h"
+#include "../include/cpp_fast.h"
 #include "../include/cpp_math.h"
 #include "../include/cpp_meta.h"
 #include "../include/cpp_nums.h"

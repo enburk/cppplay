@@ -128,5 +128,109 @@ namespace trap
         assert(b_ref_to_d.fn() == "foo!!!");
     };
 
+    // Undefined Behavior in 2017 by John Regehr [CppCon 2017]
+    // Undefined behavior optimization:
+    void bar(char *p) {}
+    void foo(char *p) {
+    #ifdef DEBUG
+        printf("%s\n", p);
+    #endif
+        if (p)
+            bar(p);
+    }
+    // Without -DDEBUG
+    //  foo:
+    //      testq %rdi, %rdi
+    //      je L1
+    //      jmp _bar
+    //  L1: ret
+    //
+    // With -DDEBUG
+    //  foo:
+    //      pushq %rbx
+    //      movq %rdi, %rbx
+    //      call _puts      ; UB if p == nullptr
+    //      movq %rbx, %rdi
+    //      popq %rbx
+    //      jmp _bar        ; unconditional!
+
+    int foo (int x) {
+    return (x + 1) > x; // TRUE or UB
+    }
+    TEST_ON
+    {
+        // cout << ((INT_MAX + 1) > INT_MAX) << " "; // VS 2017: warning C4307: '+': integral constant overflow
+        cout << foo(INT_MAX) << "\n"; // VS 2017: no warning!
+        // Possible output:
+        // 0 1 (GCC, Clang)
+        // 0 0 (VS 2017)
+
+        // int *p = (int*)malloc(sizeof(int));
+        // int *q = (int*)realloc(p, sizeof(int));
+        // *p = 1; // VS 2017: warning C6011: Dereferencing NULL pointer 'p'.
+        // *q = 2;
+        // if (p == q)
+        //     printf("%d %d\n", *p, *q);
+        // // Possible output:
+        // // 1 2 (Clang)
+        // // (VS 2017)
+
+    };
+
+
+
+// Undefined Behavior in 2017 by John Regehr [CppCon 2017]
+int fermat() {
+    const int MAX = 1000;
+    int a = 1, b = 1, c = 1;
+    while (1) {
+        if (((a * a * a) == ((b * b * b) + (c * c * c))))
+            return 1;
+        a++;
+        if (a > MAX) {
+            a = 1;
+            b++;
+        }
+        if (b > MAX) {
+            b = 1;
+            c++;
+        }
+        if (c > MAX) {
+            c = 1;
+        }
+    }
+    return 0;
+}
+
+TEST_OFF
+{
+    if (fermat())
+        cout << "Fermat's Last Theorem disproved!\n";
+    else
+        cout << "Nope.\n";
+
+    //  $ clang++ -O fermat.cpp
+    //  $ ./a.out
+    //  Fermat's Last Theorem disproved!
+    //  $
+};
+
+TEST_OFF
+{
+    using namespace std::literals;
+    TEST (std::string     ("abc\0\0def"  ).size());
+    TEST (std::string     ("abc\0\0def"s ).size());
+    TEST (std::string_view("abc\0\0def"  ).size());
+    TEST (std::string_view("abc\0\0def"sv).size());
+};
+
+TEST_ON
+{
+    auto f = [](const std::vector<int> & src)
+    {
+        std::vector<int> dst;
+        std::copy (src.begin(), src.end(), dst.begin());
+    };
+};
 
 }

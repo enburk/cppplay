@@ -13,7 +13,7 @@ namespace data
     #include "cpp_data_alignment.h"
     #include "cpp_data_inheritance.h"
     #include "cpp_data_inheritance_is_the.h"
-
+    #include "cpp_data_initialization.h"
 
     // Michael Park - Enhanced Support for Value Semantics in C++17 [CppCon 2017]
 

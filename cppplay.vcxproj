@@ -34,11 +34,19 @@
     <ClInclude Include="include\cpp_data_inheritance.h" />
     <ClInclude Include="include\cpp_data_inheritance_crtp.h" />
     <ClInclude Include="include\cpp_data_inheritance_is_the.h" />
+    <ClInclude Include="include\cpp_data_initialization.h" />
     <ClInclude Include="include\cpp_data_smart_ptr.h" />
+    <ClInclude Include="include\cpp_fast.h" />
+    <ClInclude Include="include\cpp_fast_aliasing.h" />
+    <ClInclude Include="include\cpp_fast_ctor_dtor.h" />
+    <ClInclude Include="include\cpp_fast_lambda.h" />
+    <ClInclude Include="include\cpp_fast_math.h" />
     <ClInclude Include="include\cpp_math.h" />
     <ClInclude Include="include\cpp_math_fibonacci.h" />
+    <ClInclude Include="include\cpp_math_gcd_history.h" />
     <ClInclude Include="include\cpp_meta.h" />
     <ClInclude Include="include\cpp_meta_abc.h" />
+    <ClInclude Include="include\cpp_meta_auto.h" />
     <ClInclude Include="include\cpp_meta_move.h" />
     <ClInclude Include="include\cpp_meta_scope_guard.h" />
     <ClInclude Include="include\cpp_meta_traits.h" />
@@ -139,7 +147,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

@@ -7,11 +7,21 @@
 // 
 // lvalue                            xvalue                           prvalue
 //                                                                (pure movable)
-//   iM                                im                                Im
+//   iM                                im                               Im
 //
 //            glvalue                               rvalue
 //     (generalized lvalue)            
 //               i                                     m
+
+TEST_ON // Copy elision for initialization from temporaries (prvalues) is equired since C++17
+{
+    auto foo = [](neither_copyable_nor_movable e){}
+    auto bar = [](){ return neither_copyable_nor_movable ('b'); }
+
+    oops ( foo (neither_copyable_nor_movable ('a'));   ), {"ctor: a", "-------", "dtor: a"});
+    oops ( neither_copyable_nor_movable b = bar ('b'); ), {"ctor: b", "-------", "dtor: b"});
+};
+
 
 // https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues
 //     ______ ______

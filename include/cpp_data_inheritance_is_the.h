@@ -27,7 +27,7 @@ namespace iibce
         template<class type> struct model final : public concept
         {
             type data;
-            model (type data) : data (std::move (data)) {}
+            model (type data) noexcept : data (std::move (data)) {}
             void draw_(ostream& out, size_t position) const override
             { draw(data, out, position); }
         };

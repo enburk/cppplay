@@ -5,12 +5,11 @@ using namespace std::chrono_literals;
 
 struct Time
 {
-    // auto stamp = std::chrono::high_resolution_clock::now ();
-    // a non-static data member cannot have a type that contains 'auto'
+// a non-static data member cannot have a type that contains 'auto'
     decltype (std::chrono::high_resolution_clock::now ())
     stamp  =  std::chrono::high_resolution_clock::now ();
 
-    friend auto operator - (Time t1, Time t0)
+    friend auto operator - (Time t1, Time t0) noexcept
         { return t1.stamp - t0.stamp; }
 };
 
@@ -31,31 +30,26 @@ inline std::ostream & operator << (std::ostream & stream, std::chrono::high_reso
     return stream;
 }
 
-inline int randint (int l, int u)
+inline int randint
+(
+    int l = std::numeric_limits<int>::min (),
+    int u = std::numeric_limits<int>::max ())
 {
     thread_local std::random_device seed;
     thread_local std::mt19937 generator (seed ());
     return std::uniform_int_distribution<int> (l, u) (generator);
-}
-// thread_local specifier implies the static specifier
-// https://stackoverflow.com/questions/185624/static-variables-in-an-inlined-function
-// A static local variable in an extern inline function always refers to the same object.
-
-int default_randint (int l, int u)
-{
-    static Time t;
-    static auto seed = (unsigned) t.stamp.time_since_epoch ().count ();
-    static std::default_random_engine                 generator (seed);
-    return std::uniform_int_distribution<int> (l, u) (generator);
+//  thread_local specifier implies the static specifier
+//  https://stackoverflow.com/questions/185624/static-variables-in-an-inlined-function
+//  A static local variable in an extern inline function always refers to the same object.
 }
 
 TEST_OFF
 {
     for (int i=0; i<9; i++)
     {
-        auto ms = randint (0, 9);
-        Time t0; std::this_thread::sleep_for (std::chrono::milliseconds (ms));
-        Time t1; cout <<"sleep for " << ms << " ms takes " << t1-t0 << " sec" << endl;
+        const auto ms = randint (0, 9);
+        const Time t0; std::this_thread::sleep_for (std::chrono::milliseconds (ms));
+        const Time t1; cout <<"sleep for " << ms << " ms takes " << t1-t0 << " sec" << endl;
     }
 };
 

@@ -70,9 +70,9 @@ inline auto nearly_sorted = [] (int n)
 TEST_ON
 {
     std::vector<Test> tests;
-    tests.emplace_back (TestFunction (random, std::make_tuple (5), "random"));
-    tests.emplace_back (TestFunction (random, std::make_tuple (30, 0, 5), "few unique"));
-    tests.emplace_back (TestFunction (nearly_sorted, std::make_tuple (25), "nearly sorted"));
+    tests.emplace_back (TestFunction (random, std::tuple{5}, "random"));
+    tests.emplace_back (TestFunction (random, std::tuple{30, 0, 5}, "few unique"));
+    tests.emplace_back (TestFunction (nearly_sorted, std::tuple{25}, "nearly sorted"));
 
     for (auto test : tests)
     {
