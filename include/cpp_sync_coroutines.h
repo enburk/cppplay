@@ -54,7 +54,7 @@ auto binary_search (Iterator first, Iterator last, Value value, Found on_found, 
 
 TEST_OFF
 {
-    for (char c : hello ()) cout << c;
+//    for (char c : hello ()) cout << c;
 
     //cout << sleepy ().get () << endl;
 };

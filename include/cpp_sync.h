@@ -2,6 +2,7 @@
 #include "aux_aux.h"
 #include <csignal>
 #include <future>
+#include <queue>
 //#include <experimental/atomic>
 //#include <experimental/future>
 #if (_MSC_VER >= 1915)

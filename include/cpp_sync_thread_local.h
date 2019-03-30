@@ -27,7 +27,7 @@ namespace sync_thread_local // https://en.cppreference.com/w/cpp/language/storag
         cout << "thread local string updated externally (thread " << thread_name << ")" << endl;
     }
  
-    TEST_ON
+    TEST_OFF
     {
         std::thread a (increase, "a");
         std::thread b (increase, "b");

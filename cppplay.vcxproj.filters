@@ -4,8 +4,6 @@
     <ClInclude Include="include\aux_aux.h" />
     <ClInclude Include="include\aux_chrono.h" />
     <ClInclude Include="include\aux_log.h" />
-    <ClInclude Include="include\cpp_algo.h" />
-    <ClInclude Include="include\cpp_algo_rotate.h" />
     <ClInclude Include="include\cpp_data.h" />
     <ClInclude Include="include\cpp_math.h" />
     <ClInclude Include="include\cpp_meta.h" />
@@ -14,14 +12,6 @@
     <ClInclude Include="include\cpp_meta_xvalue.h" />
     <ClInclude Include="include\cpp_nums.h" />
     <ClInclude Include="include\cpp_nums_uint.h" />
-    <ClInclude Include="include\cpp_sort.h" />
-    <ClInclude Include="include\cpp_sort_classical.h" />
-    <ClInclude Include="include\cpp_sort_counting.h" />
-    <ClInclude Include="include\cpp_sort_heapsort.h" />
-    <ClInclude Include="include\cpp_sort_partial.h" />
-    <ClInclude Include="include\cpp_sort_quicksort.h" />
-    <ClInclude Include="include\cpp_sort_sleepsort.h" />
-    <ClInclude Include="include\cpp_sort_stable.h" />
     <ClInclude Include="include\cpp_sync.h" />
     <ClInclude Include="include\cpp_sync_coroutines.h" />
     <ClInclude Include="include\cpp_trap.h" />
@@ -52,7 +42,6 @@
     <ClInclude Include="include\cpp_data_convert.h" />
     <ClInclude Include="include\cpp_data_binding.h" />
     <ClInclude Include="include\cpp_data_inheritance_is_the.h" />
-    <ClInclude Include="include\cpp_algo_stable_partition.h" />
     <ClInclude Include="include\test_aux.h" />
     <ClInclude Include="include\test_aux_chrono.h" />
     <ClInclude Include="include\test_quicksort.h" />
@@ -68,6 +57,41 @@
     <ClInclude Include="include\cpp_math_gcd_history.h" />
     <ClInclude Include="include\cpp_fast_ctor_dtor.h" />
     <ClInclude Include="include\cpp_data_initialization.h" />
+    <ClInclude Include="include\cpp_algos\sort.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\sort_classical.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\sort_counting.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\sort_heapsort.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\sort_partial.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\sort_quicksort.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\sort_sleepsort.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\sort_stable.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\std.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\std_rotate.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos\std_stable_partition.h">
+      <Filter>cpp_algos</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_algos.h" />
+    <ClInclude Include="include\aux_test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

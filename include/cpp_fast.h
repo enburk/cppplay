@@ -24,3 +24,12 @@ namespace fast
 // Disk seek                             10.000.000   ns     10    ms   20x datacenter RT
 // Read 1 MB sequentially from disk      20.000.000   ns     20    ms   80x memory, 20x SSD
 // Send packet CA->Netherlands->CA      150.000.000   ns    150    ms
+
+
+// let's test it!
+
+// recursion
+
+// fedor - weak strong exchange
+
+// x86 false sharing

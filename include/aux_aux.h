@@ -8,9 +8,11 @@
 
 #include <vector>
 #include <string>
+#include <string_view>
 #include <cassert>   
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 
 using std::cout;
 using std::endl;
@@ -55,6 +57,7 @@ TEST_OFF
 #include "aux_log.h"
 #include "aux_element.h"
 #include "aux_chrono.h"
+#include "aux_test.h"
 
 /*
 STILL NOT SUPPORTED:
