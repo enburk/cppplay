@@ -32,7 +32,8 @@ template <class Sample> struct Test
     };
     private: template<class type> struct model : concept
     {
-        type data; model (type data) : data (std::move (data)) {}
+        type data;
+        model (type data) noexcept(false) : data (std::move (data)) {}
         Sample sample_data() const override { return data.sample_data(); }
         string description() const override { return data.description(); }
     };
@@ -46,21 +47,22 @@ template <class Sample> struct Test
 
         Function (F f, std::tuple<Args...> args, string s) : f (f), args (args), s (s) {}
 
-        Sample sample_data () const { return std::apply (f, args); }
-        string description () const { return s; }
+        Sample sample_data () const noexcept(false) { return std::apply (f, args); }
+        string description () const noexcept(false) { return s; }
     };
 };
 
 template <typename T> std::ostream & operator << (std::ostream & out, const std::vector<T> & v)
 {
-    out << '[';
-    if (!v.empty()) std::copy (v.begin(), v.end(), std::ostream_iterator<T>(out, ", "));
-    if (!v.empty()) out << "\b\b";
-    out << "]";
+    std::copy (v.begin(), v.end(), std::ostream_iterator<T>(out, " "));
+    // out << '[';
+    // if (!v.empty()) std::copy (v.begin(), v.end(), std::ostream_iterator<T>(out, ", "));
+    // if (!v.empty()) out << "\b\b";
+    // out << "]";
     return out;
 }
 
-TEST_ON
+TEST_OFF
 {
     using Letters = std::vector<char>;
     using Strings = std::vector<std::string>;
@@ -92,3 +94,22 @@ TEST_ON
     , tests);
 };
 
+// Output:
+// 
+// letters:
+// a b c
+// 
+// letters:
+// A B C
+// 
+// strings:
+// abc def
+// 
+// strings:
+// Abc Def
+// 
+// numbers:
+// 0 1 2 3 4
+// 
+// numbers:
+// 10 11 12 13

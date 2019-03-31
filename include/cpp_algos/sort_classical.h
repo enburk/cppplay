@@ -1,22 +1,27 @@
-template<class I, class C = std::less<>>
-void
-selection_sort (I f, I l, C compare = C {}) // O (N²), minimizing the number of swaps
+template <
+typename I, // forward iterator
+typename C = std::less<>
+>
+void selection_sort (I f, I l, C compare = C {}) // O (N**2), minimizes the number of swaps
 {
-    for (auto i=f; i!=l; ++i)
-        std::iter_swap (std::min_element (i, l, compare), i); 
+    for (auto i=f; i!=l; ++i) std::iter_swap (std::min_element (i, l, compare), i); 
 }
 
-template<class I, class C = std::less<>>
-void
-insertion_sort (I f, I l, C compare = C {}) // O (N²), better on nearly sorted input; stable
+template <
+typename I,
+typename C = std::less<>
+>
+void insertion_sort (I f, I l, C compare = C {}) // O (N**2), better on nearly sorted input; stable
 {
     for (auto i=f; i!=l; ++i)
         std::rotate (std::upper_bound (f, i, *i, compare), i, std::next (i));
 }
 
-template<class I, class C = std::less<>>
-void
-insertion_sort_linear (I f, I l, C compare = C {}) // O (N) for nearly sorted input
+template <
+typename I,
+typename C = std::less<>
+>
+void insertion_sort_linear (I f, I l, C compare = C {}) // O (N) for nearly sorted input
 {
     for (auto i = std::next (f); i != l; ++i)
     {
@@ -28,9 +33,11 @@ insertion_sort_linear (I f, I l, C compare = C {}) // O (N) for nearly sorted in
     }
 }
 
-template<class I, class C = std::less<>>
-void
-merge_sort (I f, I l, C compare = C {}) // O (N log N), stable
+template <
+typename I,
+typename C = std::less<>
+>
+void merge_sort (I f, I l, C compare = C {}) // O (N log N), stable
 {
     auto const N = std::distance (f, l); if (N <= 1) return;                   
     auto const middle = std::next (f, N / 2);
@@ -43,23 +50,30 @@ merge_sort (I f, I l, C compare = C {}) // O (N log N), stable
 
 TEST_OFF
 {
-    auto vv = inputs (0, 10'000); for (const auto & input : vv)
+    using Test = Test<std::vector<int>>; std::vector<Test> tests;
+    tests.emplace_back (Test::Function (random, std::tuple{10'000},       "random       "));
+    tests.emplace_back (Test::Function (random, std::tuple{10'000, 0, 5}, "few unique   "));
+    tests.emplace_back (Test::Function (sorted, std::tuple{10'000},       "sorted       "));
+    tests.emplace_back (Test::Function (sorted, std::tuple{10'000, -1.0}, "reversed     "));
+    tests.emplace_back (Test::Function (sorted, std::tuple{10'000,  0.8}, "nearly sorted"));
+
+    for (auto test : tests)
     {
-        cout << input.first << endl << endl;
+        cout << test.description () << endl << endl;
 
-        const auto & v0 = input.second; auto v1 = v0, v2 = v0, v3 = v0, v4 = v0; 
+        const auto v0 = test.sample_data (); auto v1 = v0, v2 = v0, v3 = v0, v4 = v0; 
 
-        Time t0; selection_sort        (v1.begin (), v1.end ());
-        Time t1; insertion_sort        (v2.begin (), v2.end ());
-        Time t2; insertion_sort_linear (v3.begin (), v3.end ());
-        Time t3; merge_sort            (v4.begin (), v4.end ());
-        Time t4;
+        const Time t0; selection_sort        (v1.begin (), v1.end ());
+        const Time t1; insertion_sort        (v2.begin (), v2.end ());
+        const Time t2; insertion_sort_linear (v3.begin (), v3.end ());
+        const Time t3; merge_sort            (v4.begin (), v4.end ());
+        const Time t4;
 
-        cout << "selection_sort        " << t1-t0 << " sec" << endl;
-        cout << "insertion_sort        " << t2-t1 << " sec" << endl;
-        cout << "insertion_sort_linear " << t3-t2 << " sec" << endl;
-        cout << "merge_sort            " << t4-t3 << " sec" << endl;
-        cout << endl;
+        cout << "selection sort " << t1-t0 << " sec" << endl;
+        cout << "insertion sort " << t2-t1 << " sec" << endl;
+        cout << "insertion sort " << t3-t2 << " sec" << " (linear)" << endl;
+        cout << "merge sort     " << t4-t3 << " sec" << endl;
+        cout <<  endl;
 
         assert (std::is_sorted (v1.begin (), v1.end ()));
         assert (std::is_sorted (v2.begin (), v2.end ()));
@@ -70,37 +84,37 @@ TEST_OFF
 
 // Possible output:
 // 
-// randomized
+// random
 // 
-// selection_sort        0.140'027'540 sec
-// insertion_sort        0.006'016'558 sec
-// insertion_sort_linear 0.013'680'228 sec
-// merge_sort            0.000'840'389 sec
+// selection sort 0.158'999'217 sec
+// insertion sort 0.005'508'724 sec
+// insertion sort 0.014'025'938 sec (linear)
+// merge sort     0.000'715'994 sec
 // 
-// few_unique
+// few unique
 // 
-// selection_sort        0.139'673'238 sec
-// insertion_sort        0.005'900'784 sec
-// insertion_sort_linear 0.012'719'140 sec
-// merge_sort            0.000'595'703 sec
+// selection sort 0.139'366'025 sec
+// insertion sort 0.004'331'685 sec
+// insertion sort 0.011'691'565 sec (linear)
+// merge sort     0.000'459'813 sec
 // 
 // sorted
 // 
-// selection_sort        0.137'635'286 sec
-// insertion_sort        0.000'170'787 sec
-// insertion_sort_linear 0.000'010'264 sec
-// merge_sort            0.000'181'461 sec
+// selection sort 0.142'359'735 sec
+// insertion sort 0.000'153'134 sec
+// insertion sort 0.000'024'223 sec (linear)
+// merge sort     0.000'156'829 sec
 // 
 // reversed
 // 
-// selection_sort        0.137'787'598 sec
-// insertion_sort        0.009'672'063 sec
-// insertion_sort_linear 0.025'868'532 sec
-// merge_sort            0.000'345'680 sec
+// selection sort 0.137'865'474 sec
+// insertion sort 0.010'138'055 sec
+// insertion sort 0.026'257'373 sec (linear)
+// merge sort     0.000'267'676 sec
 // 
-// nearly_sorted
+// nearly sorted
 // 
-// selection_sort        0.138'425'587 sec
-// insertion_sort        0.000'292'309 sec
-// insertion_sort_linear 0.000'153'544 sec
-// merge_sort            0.000'229'496 sec
+// selection sort 0.138'670'558 sec
+// insertion sort 0.002'389'796 sec
+// insertion sort 0.005'569'895 sec (linear)
+// merge sort     0.000'499'225 sec

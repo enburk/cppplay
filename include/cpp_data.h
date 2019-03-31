@@ -32,7 +32,7 @@ namespace data
         return std::visit(GetSound{}, animal);
     }
 
-    TEST_ON
+    TEST_OFF
     {
         cout << get_sound(Cat  {}) << endl;
         cout << get_sound(Dog  {}) << endl;
@@ -42,7 +42,7 @@ namespace data
     template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
     template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
-    TEST_ON // https://en.cppreference.com/w/cpp/utility/variant/visit
+    TEST_OFF // https://en.cppreference.com/w/cpp/utility/variant/visit
     {
         using var_t = std::variant<int, long, double, std::string>;
 

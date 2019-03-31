@@ -1,14 +1,16 @@
 #include "../include/aux_aux.h"
-//#include "../include/cpp_algos.h"
+#include "../include/cpp_algos.h"
 
-#include "../include/cpp_data.h"
-#include "../include/cpp_fast.h"
-#include "../include/cpp_math.h"
-#include "../include/cpp_meta.h"
-#include "../include/cpp_nums.h"
-#include "../include/cpp_sync.h"
-#include "../include/cpp_trap.h"
-#include "../include/lib_boost_interprocess.h"
+ #include "../include/cpp_data.h"
+// #include "../include/cpp_fast.h"
+// #include "../include/cpp_math.h"
+// #include "../include/cpp_meta.h"
+// #include "../include/cpp_nums.h"
+// #include "../include/cpp_sync.h"
+// #include "../include/cpp_trap.h"
+// #include "../include/lib_boost_interprocess.h"
+
+
 
 // struct XRGB { int8_t channels [4]; }; // x, r, g, b; };
 // 
@@ -30,7 +32,7 @@
 //     imp<XRGB>::print (c);
 // };
 
-int main () { return 0; }
+int main () noexcept(false) { return 0; }
 
 // #include "../include/test_aux.h"
 // #include "../include/test_aux_chrono.h"

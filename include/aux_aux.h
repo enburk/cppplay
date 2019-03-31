@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <iostream>
 #include <iterator>
+#include <algorithm>
 
 using std::cout;
 using std::endl;
@@ -39,7 +40,7 @@ namespace detail
 #define CONCAt(x,y) x##y
 #define CONCAT(x,y) CONCAt (x,y)
 
-#define TEST_OFF auto                     CONCAT (Test,__COUNTER__) = []()
+#define TEST_OFF inline auto              CONCAT (Test,__COUNTER__) = []()
 #define TEST_ON  inline detail::Filename  CONCAT (Test,__COUNTER__) = __FILE__; \
                  inline detail::TestClass CONCAT (Test,__COUNTER__) = []()
 
@@ -53,6 +54,11 @@ TEST_OFF
     TEST (        "Test how test works."); cout << endl;
     TESt (cout << "Test how test works."); cout << endl;
 };
+
+// VS 2017 stable false positives:
+#pragma warning(disable : 26486)
+#pragma warning(disable : 26487)
+#pragma warning(disable : 26489)
 
 #include "aux_log.h"
 #include "aux_element.h"
@@ -85,3 +91,54 @@ TEST_ON
     my_assert(false, "On purpose");
 };
 */
+
+// https://stackoverflow.com/questions/81870/is-it-possible-to-print-a-variables-type-in-standard-c
+
+template <class T> constexpr std::string_view type_name () // Howard Hinnant et al.
+{
+    using namespace std;
+
+    #ifdef __clang__
+    string_view p = __PRETTY_FUNCTION__;
+    return string_view(p.data() + 34, p.size() - 34 - 1);
+
+    #elif defined(__GNUC__)
+    string_view p = __PRETTY_FUNCTION__;
+    #if __cplusplus < 201402
+    return string_view(p.data() + 36, p.size() - 36 - 1);
+    #else
+    return string_view(p.data() + 49, p.find(';', 49) - 49);
+    #endif
+
+    #elif defined(_MSC_VER)
+    string_view s = __FUNCSIG__;
+    s.remove_prefix (84);
+    s.remove_suffix (7);
+    return s;
+    #endif
+}
+
+TEST_OFF
+{
+    const int c = 0;
+    const int & r = c;
+
+    cout << type_name<decltype(c)>() << endl;
+    cout << type_name<decltype(r)>() << endl;
+
+    cout << endl << type_name<decltype(detail::log::mutex)>() << endl;
+    cout << endl << type_name<decltype(detail::log::print)>() << endl;
+    cout << endl << type_name<decltype(detail::log::Log  )>() << endl;
+};
+
+// Output:
+// 
+// const int
+// const int&
+// 
+// class std::recursive_mutex
+// 
+// void(void)
+// 
+// class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,
+// class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >

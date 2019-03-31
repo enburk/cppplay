@@ -17,7 +17,7 @@ namespace trap
     // void fun() noexcept { throw "so sue me"; }
     // VS 2017: warning C4297: 'trap::fun': function assumed not to throw an exception but does
 
-    TEST_ON // Victor Zverovich - A modern formatting library for C++ [CppCon 2017]
+    TEST_OFF // Victor Zverovich - A modern formatting library for C++ [CppCon 2017]
     {
         // std::ofstream ofs ("test.json");
         // ofs << "{'value':" << 4.2 << "}";
@@ -51,7 +51,7 @@ namespace trap
     template <typename T>
     struct id { using type = T; };
 
-    TEST_ON // Michael Park - Enhanced Support for Value Semantics in C++17 [CppCon 2017]
+    TEST_OFF // Michael Park - Enhanced Support for Value Semantics in C++17 [CppCon 2017]
     {
         using std::string;
 
@@ -82,7 +82,7 @@ namespace trap
     // Function Default Arguments - Slingshot or Shotgun by Michael Price [CppCon 2017]
     std::string fn (std::string s = "foo", bool b = true) { return (b) ? s : ""; }
 
-    TEST_ON
+    TEST_OFF
     {
         using std::string;
 
@@ -116,7 +116,7 @@ namespace trap
         }
     };
 
-    TEST_ON
+    TEST_OFF
     {
         Base b;
         assert(b.fn() == "foo");
@@ -224,7 +224,7 @@ TEST_OFF
     TEST (std::string_view("abc\0\0def"sv).size());
 };
 
-TEST_ON
+TEST_OFF
 {
     auto f = [](const std::vector<int> & src)
     {
