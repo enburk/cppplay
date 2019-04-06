@@ -1,5 +1,67 @@
+// https://stackoverflow.com/questions/24650626/how-to-implement-classic-sorting-algorithms-in-modern-c
+// https://stackoverflow.com/questions/17270628/insertion-sort-vs-bubble-sort-algorithms
+// In insertion sort elements are bubbled into the sorted section,
+// while in bubble sort the maximums are bubbled out of the unsorted section.
+
+// In bubble sort in ith iteration you have n-i-1 inner iterations (n^2)/2 total,
+// but in insertion sort you have maximum i iterations on i'th step, but i/2 on average,
+// as you can stop inner loop earlier, after you found correct position for the current element.
+// So you have (sum from 0 to n) / 2 which is (n^2) / 4 total;
+
 template <
 typename I, // forward iterator
+typename C = std::less<>
+>
+void bubble_sort (I f, I l, C compare = C {}) // O (N**2)
+{ 
+    for (auto i=f; i!=l; ++i)
+    for (auto j=f; j!=i; ++j)
+    {
+        auto jj = std::next (j); if (!compare (*j, *jj)) std::swap (*j, *jj);
+    }
+} 
+/*
+template <
+typename I,
+typename C = std::less<>
+>
+void bubble_sort_opt (I f, I l, C compare = C {}) // O (N**2)
+{ 
+    for (auto i=f; i!=l; ++i) {
+
+        for (auto j=f; j!=i; ++j)
+        {
+            auto jj = std::next (j); if (!compare (*j, *jj)) std::swap (*j, *jj);
+        }
+} 
+
+
+// An optimized version of Bubble Sort 
+void bubbleSort(int arr[], int n) 
+{ 
+   int i, j; 
+   bool swapped; 
+   for (i = 0; i < n-1; i++) 
+   { 
+     swapped = false; 
+     for (j = 0; j < n-i-1; j++) 
+     { 
+        if (arr[j] > arr[j+1]) 
+        { 
+           swap(&arr[j], &arr[j+1]); 
+           swapped = true; 
+        } 
+     } 
+  
+     // IF no two elements were swapped by inner loop, then break 
+     if (swapped == false) 
+        break; 
+   } 
+} 
+*/
+
+template <
+typename I,
 typename C = std::less<>
 >
 void selection_sort (I f, I l, C compare = C {}) // O (N**2), minimizes the number of swaps
@@ -46,8 +108,6 @@ void merge_sort (I f, I l, C compare = C {}) // O (N log N), stable
     std::inplace_merge (f, middle, l, compare); // will allocate and deallocate its temporary buffer
 }
 
-// https://stackoverflow.com/questions/24650626/how-to-implement-classic-sorting-algorithms-in-modern-c
-
 TEST_OFF
 {
     using Test = Test<std::vector<int>>; std::vector<Test> tests;
@@ -63,10 +123,10 @@ TEST_OFF
 
         const auto v0 = test.sample_data (); auto v1 = v0, v2 = v0, v3 = v0, v4 = v0; 
 
-        const Time t0; selection_sort        (v1.begin (), v1.end ());
-        const Time t1; insertion_sort        (v2.begin (), v2.end ());
-        const Time t2; insertion_sort_linear (v3.begin (), v3.end ());
-        const Time t3; merge_sort            (v4.begin (), v4.end ());
+        const Time t0; selection_sort        (v1.begin(), v1.end());
+        const Time t1; insertion_sort        (v2.begin(), v2.end());
+        const Time t2; insertion_sort_linear (v3.begin(), v3.end());
+        const Time t3; merge_sort            (v4.begin(), v4.end());
         const Time t4;
 
         cout << "selection sort " << t1-t0 << " sec" << endl;
@@ -75,10 +135,10 @@ TEST_OFF
         cout << "merge sort     " << t4-t3 << " sec" << endl;
         cout <<  endl;
 
-        assert (std::is_sorted (v1.begin (), v1.end ()));
-        assert (std::is_sorted (v2.begin (), v2.end ()));
-        assert (std::is_sorted (v3.begin (), v3.end ()));
-        assert (std::is_sorted (v4.begin (), v4.end ()));
+        assert (std::is_sorted (v1.begin(), v1.end()));
+        assert (std::is_sorted (v2.begin(), v2.end()));
+        assert (std::is_sorted (v3.begin(), v3.end()));
+        assert (std::is_sorted (v4.begin(), v4.end()));
     }
 };
 

@@ -2,16 +2,16 @@ struct element
 {
     std::string s;
 
-   ~element         (                  ) noexcept(false)           { log::put ( "dtor: " + s ); }
-    element         (                  ) noexcept(false) : s ("_") { log::put ( "ctor: " + s ); }
-    element         (char             c) noexcept(false) : s (1,c) { log::put ( "ctor: " + s ); }
-    element         (const element  & e) noexcept(false) : s (e.s) { log::put ( "copy: " + s ); }
-    element         (      element && e) noexcept(false) : s (std::move(e.s))
-                                                                   { log::put ( "move: " + s ); }
-    void operator = (char             c) noexcept(false)           { log::put ( "assg: " + s + "=" + c   ); s = c;   }
-    void operator = (const element  & e) noexcept(false)           { log::put ( "copy: " + s + "=" + e.s ); s = e.s; }
-    void operator = (      element && e) noexcept(false)           { log::put ( "move: " + s + "=" + e.s ); 
-                                                          s = std::move(e.s); }
+   ~element         () noexcept(false)             { log::put ( "dtor: " + s ); }
+    element         () noexcept(false)   : s ("_") { log::put ( "ctor: " + s ); }
+    element         (char             c) : s (1,c) { log::put ( "ctor: " + s ); }
+    element         (const element  & e) : s (e.s) { log::put ( "copy: " + s ); }
+    element         (      element && e) : s (std::move(e.s))
+                                                   { log::put ( "move: " + s ); }
+    void operator = (char             c)           { log::put ( "assg: " + s + "=" + c   ); s = c;   }
+    void operator = (const element  & e)           { log::put ( "copy: " + s + "=" + e.s ); s = e.s; }
+    void operator = (      element && e)           { log::put ( "move: " + s + "=" + e.s ); 
+                                           s = std::move(e.s); }
 };
 
 struct only_copyable : element

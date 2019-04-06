@@ -1,53 +1,120 @@
 // really fast when the variation in integer keys is not significantly greater than the number of items
 
-template<typename ForwardIterator> void counting (ForwardIterator first, ForwardIterator last)
+template<typename I> void counting_sort (I first, I last) // I = ForwardIterator
 {
     if (first == last || std::next (first) == last) return;
 
-    auto mm  = std::minmax_element (first, last);
-    auto min = *mm.first;
-    auto max = *mm.second;
+    const auto mmx = std::minmax_element (first, last); // O(N), better to know them aforehead
+    const auto min = *mmx.first;
+    const auto max = *mmx.second;
     if (min == max) return;
 
-    // warning C26451: Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value.
-    // Cast the value to the wider type before calling operator '-' to avoid overflow (io.2).
-    using type = typename std::iterator_traits<ForwardIterator>::value_type; // difference_type;
-
-    int64_t size = (int64_t) max - min + 1; assert (size <= std::numeric_limits<int32_t>::max ());
-
-    // x86 : warning C4244: 'argument': conversion from 'int64_t' to 'const unsigned int', possible loss of data
-    std::vector<type> counts (size, 0);
-
     #pragma warning (push)
-    #pragma warning (disable: 26451)
-    for (auto it = first ; it != last ; ++it) ++counts [*it - min];
-    #pragma warning (pop)
+    #pragma warning (disable: 26451) // Arithmetic overflow
+    #pragma warning (disable: 26446) // Prefer to use gsl::at() instead of unchecked subscript operator
 
-    for (auto count: counts) first = std::fill_n (first, count, min++);
+    using integer = typename std::iterator_traits<I>::difference_type;
+
+    std::vector<integer> counts (max - min + 1, 0);
+
+    for (auto it = first; it != last ; ++it) ++counts [*it - min];
+
+    auto value = min;
+
+    for (auto count: counts) first = std::fill_n (first, count, value++);
+
+    #pragma warning (pop)
 }
 
 // https://stackoverflow.com/questions/24650626/how-to-implement-classic-sorting-algorithms-in-modern-c
 
 TEST_OFF
 {
-    auto vv = inputs (0, 1'000'000); for (auto & input : vv)
+    using Test = Test<std::vector<int>>; std::vector<Test> tests;
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,          10}, "         10 keys"));
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,         100}, "        100 keys"));
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,       1'000}, "      1'000 keys"));
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,      10'000}, "     10'000 keys"));
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,     100'000}, "    100'000 keys"));
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,   1'000'000}, "  1'000'000 keys"));
+    tests.emplace_back (Test::Function (sorted, std::tuple{1'000'000},                 "          sorted"));
+    tests.emplace_back (Test::Function (sorted, std::tuple{1'000'000, -1.0},           "        reversed"));
+    tests.emplace_back (Test::Function (sorted, std::tuple{1'000'000,  0.8},           "   nearly sorted"));
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,  10'000'000}, " 10'000'000 keys"));
+    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1, 100'000'000}, "100'000'000 keys"));
+
+    for (auto test : tests)
     {
-        auto & v = input.second;
+        cout << test.description () << endl << endl;
 
-        Time t0; counting (v.begin (), v.end ());
-        Time t1;
+        const auto v0 = test.sample_data (); auto v1 = v0, v2 = v0; 
 
-        cout << input.first << " " <<  t1-t0 << " sec" << endl;
+        const Time t0; merge_sort    (v1.begin(), v1.end());
+        const Time t1; counting_sort (v2.begin(), v2.end());
+        const Time t2;
 
-        assert (std::is_sorted (v.begin (), v.end ()));
+        cout << "merge sort    " << t1-t0 << " sec" << endl;
+        cout << "counting sort " << t2-t1 << " sec" << endl;
+        cout <<  endl;
+
+        assert (std::is_sorted (v1.begin(), v1.end()));
+        assert (std::is_sorted (v2.begin(), v2.end()));
     }
 };
 
 // Possible output:
 // 
-// randomized    0.018'867'893 sec
-// few_unique    0.003'718'319 sec
-// sorted        0.015'132'742 sec
-// reversed      0.013'332'085 sec
-// nearly_sorted 0.014'917'205 sec
-
+//          10 keys
+// 
+// merge sort    0.065'327'105 sec
+// counting sort 0.004'293'504 sec
+// 
+//         100 keys
+// 
+// merge sort    0.068'914'468 sec
+// counting sort 0.003'854'629 sec
+// 
+//       1'000 keys
+// 
+// merge sort    0.080'462'342 sec
+// counting sort 0.003'708'884 sec
+// 
+//      10'000 keys
+// 
+// merge sort    0.095'483'857 sec
+// counting sort 0.004'516'020 sec
+// 
+//     100'000 keys
+// 
+// merge sort    0.106'917'598 sec
+// counting sort 0.006'511'280 sec
+// 
+//   1'000'000 keys
+// 
+// merge sort    0.109'050'803 sec
+// counting sort 0.026'080'016 sec
+// 
+//           sorted
+// 
+// merge sort    0.018'154'811 sec
+// counting sort 0.016'065'126 sec
+// 
+//         reversed
+// 
+// merge sort    0.038'082'366 sec
+// counting sort 0.015'462'853 sec
+// 
+//    nearly sorted
+// 
+// merge sort    0.065'280'303 sec
+// counting sort 0.021'220'779 sec
+// 
+//  10'000'000 keys
+// 
+// merge sort    0.108'918'606 sec
+// counting sort 0.082'811'494 sec
+// 
+// 100'000'000 keys
+// 
+// merge sort    0.108'499'438 sec
+// counting sort 0.551'911'857 sec

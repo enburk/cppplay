@@ -56,7 +56,6 @@
     <ClInclude Include="include\cpp_meta_auto.h" />
     <ClInclude Include="include\cpp_math_gcd_history.h" />
     <ClInclude Include="include\cpp_fast_ctor_dtor.h" />
-    <ClInclude Include="include\cpp_data_initialization.h" />
     <ClInclude Include="include\cpp_algos\sort.h">
       <Filter>cpp_algos</Filter>
     </ClInclude>
@@ -92,6 +91,21 @@
     </ClInclude>
     <ClInclude Include="include\cpp_algos.h" />
     <ClInclude Include="include\aux_test.h" />
+    <ClInclude Include="include\cpp_tricky.h" />
+    <ClInclude Include="include\cpp_tricky\tricky_conversion.h">
+      <Filter>cpp_tricky</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_tricky\tricky_initialization.h">
+      <Filter>cpp_tricky</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aux_type.h" />
+    <ClInclude Include="include\cpp_optim.h" />
+    <ClInclude Include="include\cpp_tricky\tricky_initializer_list.h">
+      <Filter>cpp_tricky</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cpp_optim\optim_copy_elision.h">
+      <Filter>cpp_optim</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -100,6 +114,12 @@
   <ItemGroup>
     <Filter Include="cpp_algos">
       <UniqueIdentifier>{ca7dbcab-88bc-4532-a2b8-70375eacef61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp_tricky">
+      <UniqueIdentifier>{9043e21b-05b0-416f-bcb0-88d33ca81c32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp_optim">
+      <UniqueIdentifier>{219c4a54-a51d-4dfe-9f5d-dd9b2739c81f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

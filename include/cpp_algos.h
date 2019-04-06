@@ -1,4 +1,5 @@
 #pragma once
+
 #include "aux_aux.h"
 #include <algorithm>
 #include <execution>
@@ -8,7 +9,7 @@ namespace algos
 {
     #include "cpp_algos/sort.h"
     #include "cpp_algos/sort_classical.h"
-//    #include "cpp_algos/sort_counting.h"
+    #include "cpp_algos/sort_counting.h"
 //    #include "cpp_algos/sort_heapsort.h"
 //    #include "cpp_algos/sort_quicksort.h"
 //    #include "cpp_algos/sort_sleepsort.h"

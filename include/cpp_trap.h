@@ -233,4 +233,54 @@ TEST_OFF
     };
 };
 
+// CppCon 2018: Jason Turner “Surprises in Object Lifetime”
+
+struct S1
+{
+    ~S1 () { cout << "S1 dtor" << endl; }
+     S1 () { throw 1; }
+};
+struct S2
+{
+    ~S2 () { cout << "S2 dtor" << endl; }
+     S2 () = default;
+     S2 (int) : S2 () { throw 1; }
+};
+
+TEST_OFF
+{
+    try { S1 s; } catch (...) {}
+    try { S2 s; } catch (...) {}
+}
+
+// Can be used in interesting way (by Howard Hinnant):
+
+struct S3
+{
+    int ptr1{nullptr};
+    int ptr2{nullptr};
+
+    S3 () = default;
+    S3 (int val1, int val2) : S3 () // make sure d'tor is called
+    {
+        ptr1 = new int(val1);
+        ptr2 = new int(val2);
+    }
+   ~S3 () { delete pt1; delete ptr2; } // delete nullptr is well defined
+};
+
+// Better to do this with unique_ptr
+
+
+// CppCon 2018: Titus Winters “Modern C++ Design (part 2 of 2)”
+// const span<int> s1 = ...
+// span<int> s2 = s1;
+// s1[0]++;
+//
+// const smart_ptr<T> != smart_ptr<const T>
+// std::is_same(const smart_ptr<T>,
+//              smart_ptr<const T>)
+
+
+
 }

@@ -1,7 +1,8 @@
-#include "../include/aux_aux.h"
 #include "../include/cpp_algos.h"
+#include "../include/cpp_optim.h"
+#include "../include/cpp_tricky.h"
 
- #include "../include/cpp_data.h"
+// #include "../include/cpp_data.h"
 // #include "../include/cpp_fast.h"
 // #include "../include/cpp_math.h"
 // #include "../include/cpp_meta.h"
