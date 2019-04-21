@@ -25,6 +25,10 @@ template <class Sample> struct Test
 
     template<class type> Test (type data) : self (std::make_shared<model<type>>(std::move (data))) {}
 
+    template <class F, class... Args>
+        Test (string s, F f, Args... args) :
+            Test (Function (f, std::tuple{args...}, s)) {}
+
     private: struct concept : polymorphic
     {
         virtual Sample sample_data() const = 0;

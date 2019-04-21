@@ -31,27 +31,27 @@ template<typename I> void counting_sort (I first, I last) // I = ForwardIterator
 TEST_OFF
 {
     using Test = Test<std::vector<int>>; std::vector<Test> tests;
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,          10}, "         10 keys"));
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,         100}, "        100 keys"));
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,       1'000}, "      1'000 keys"));
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,      10'000}, "     10'000 keys"));
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,     100'000}, "    100'000 keys"));
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,   1'000'000}, "  1'000'000 keys"));
-    tests.emplace_back (Test::Function (sorted, std::tuple{1'000'000},                 "          sorted"));
-    tests.emplace_back (Test::Function (sorted, std::tuple{1'000'000, -1.0},           "        reversed"));
-    tests.emplace_back (Test::Function (sorted, std::tuple{1'000'000,  0.8},           "   nearly sorted"));
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1,  10'000'000}, " 10'000'000 keys"));
-    tests.emplace_back (Test::Function (random, std::tuple{1'000'000, 1, 100'000'000}, "100'000'000 keys"));
+    tests.emplace_back("         10 keys", random, 1'000'000, 1,          10);
+    tests.emplace_back("        100 keys", random, 1'000'000, 1,         100);
+    tests.emplace_back("      1'000 keys", random, 1'000'000, 1,       1'000);
+    tests.emplace_back("     10'000 keys", random, 1'000'000, 1,      10'000);
+    tests.emplace_back("    100'000 keys", random, 1'000'000, 1,     100'000);
+    tests.emplace_back("  1'000'000 keys", random, 1'000'000, 1,   1'000'000);
+    tests.emplace_back("          sorted", sorted, 1'000'000                );
+    tests.emplace_back("        reversed", sorted, 1'000'000,-1.0           );
+    tests.emplace_back("   nearly sorted", sorted, 1'000'000, 0.8           );
+    tests.emplace_back(" 10'000'000 keys", random, 1'000'000, 1,  10'000'000);
+    tests.emplace_back("100'000'000 keys", random, 1'000'000, 1, 100'000'000);
 
     for (auto test : tests)
     {
         cout << test.description () << endl << endl;
 
-        const auto v0 = test.sample_data (); auto v1 = v0, v2 = v0; 
+        auto v0 = test.sample_data (); auto v1 = v0, v2 = v0; 
 
-        const Time t0; merge_sort    (v1.begin(), v1.end());
-        const Time t1; counting_sort (v2.begin(), v2.end());
-        const Time t2;
+        Time t0; merge_sort    (v1.begin(), v1.end());
+        Time t1; counting_sort (v2.begin(), v2.end());
+        Time t2;
 
         cout << "merge sort    " << t1-t0 << " sec" << endl;
         cout << "counting sort " << t2-t1 << " sec" << endl;

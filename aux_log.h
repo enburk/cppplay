@@ -37,12 +37,20 @@ namespace detail // anonymous namespaces expose using declarations
             }
             Log.clear();
         }
+
+        struct checker {
+            string title;
+            checker (string && title) : title (title) {}
+            void operator == (const std::vector<string> & true_log) {
+                check (title, true_log);
+            }
+        };
     };
 }
 
 using detail::log;
 
-#define oops(...) { __VA_ARGS__; log::put ("-------"); }; log::check (#__VA_ARGS__
+#define oops(...) { __VA_ARGS__; log::put ("-------"); }; log::checker (#__VA_ARGS__) == std::vector<std::string>
 
 TEST_OFF
 {
@@ -51,7 +59,7 @@ TEST_OFF
     log::put ("test 2");
     log::print ();
 
-    oops ( log::put ("test 1"); ), {"test 1", "-------"});
-//  oops ( log::put ("test 2"); ), {"test 1", "-------"});
-    oops ( log::put ("test 2"); ), {"test 2", "-------"});
+    oops ( log::put ("test 1"); ) {"test 1", "-------"};
+//  oops ( log::put ("test 2"); ) {"test 1", "-------"}; // should print error log and exit
+    oops ( log::put ("test 2"); ) {"test 2", "-------"};
 };

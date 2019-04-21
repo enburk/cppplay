@@ -113,3 +113,20 @@ TEST_OFF
 
     assert (v1 == v2);
 };
+
+// Sean Parent, "Generic Programming", Pacific++ talk, 2018
+// Elements of Programming, Alexander Stepanov, Paul McJones
+template <typename I, typename P>
+    requires(Mutable(I) && ForwardIterator(I) &&
+        UnaryPredicate(P) && ValueType(I) == Domain(P))
+I partition_semistable(I f, I l, P p) {
+    // Precondition: mutable_bounded_range(f, l)
+    I i = find_if(f, l, p);
+    if (i == l) return i;
+    I j = successor(i);
+    while (true) {
+        j = find_if_not(j, l, p);
+        if (j == l) return i;
+        swap_step(i, j);
+    }
+}

@@ -1,18 +1,18 @@
 TEST_OFF
 {
-    oops ( element e        ;     ), { "ctor: _", "-------", "dtor: _" });
-//  oops ( element e   ()   ;     ), {            "-------"            }); // it's a function!
-    oops ( element e   {}   ;     ), { "ctor: _", "-------", "dtor: _" });
-    oops ( element e = {}   ;     ), { "ctor: _", "-------", "dtor: _" });
-    oops ( element e   ('a');     ), { "ctor: a", "-------", "dtor: a" });
-    oops ( element e   {'a'};     ), { "ctor: a", "-------", "dtor: a" });
-    oops ( element e = ('a');     ), { "ctor: a", "-------", "dtor: a" });
-    oops ( element e = {'a'};     ), { "ctor: a", "-------", "dtor: a" });
-    oops ( element e =  'a' ;     ), { "ctor: a", "-------", "dtor: a" });
-    oops ( auto e = element();    ), { "ctor: _", "-------", "dtor: _" });
-    oops ( auto e = element{};    ), { "ctor: _", "-------", "dtor: _" });
-    oops ( auto e = element('a'); ), { "ctor: a", "-------", "dtor: a" });
-    oops ( auto e = element{'a'}; ), { "ctor: a", "-------", "dtor: a" });
+    oops ( element e        ;     ) { "ctor: _", "-------", "dtor: _" };
+//  oops ( element e   ()   ;     ) {            "-------"            }; // it's a function!
+    oops ( element e   {}   ;     ) { "ctor: _", "-------", "dtor: _" };
+    oops ( element e = {}   ;     ) { "ctor: _", "-------", "dtor: _" };
+    oops ( element e   ('a');     ) { "ctor: a", "-------", "dtor: a" };
+    oops ( element e   {'a'};     ) { "ctor: a", "-------", "dtor: a" };
+    oops ( element e = ('a');     ) { "ctor: a", "-------", "dtor: a" };
+    oops ( element e = {'a'};     ) { "ctor: a", "-------", "dtor: a" };
+    oops ( element e =  'a' ;     ) { "ctor: a", "-------", "dtor: a" };
+    oops ( auto e = element();    ) { "ctor: _", "-------", "dtor: _" };
+    oops ( auto e = element{};    ) { "ctor: _", "-------", "dtor: _" };
+    oops ( auto e = element('a'); ) { "ctor: a", "-------", "dtor: a" };
+    oops ( auto e = element{'a'}; ) { "ctor: a", "-------", "dtor: a" };
 
     // CppCon 2018: Nicolai Josuttis “The Nightmare of Initialization in C++”
     {
@@ -107,12 +107,22 @@ TEST_OFF
     // =====
 };
 
-/*
-struct A {
-    int i;
+// https://mikelui.io/2019/01/03/seriously-bonkers.html
+// Initialization in C++ is Seriously Bonkers by Mike Lui
+
+struct an_aggregate_1 { int i; };
+struct an_aggregate_2 { int i; an_aggregate_2 () = default; };
+//struct not_an_aggregate_1 { int i; not_an_aggregate_1 (){} }; // warning C26495: Variable is uninitialized
+//struct not_an_aggregate_2 { int i; not_an_aggregate_2 (); };  // warning C26495: Variable is uninitialized
+//not_an_aggregate_2::not_an_aggregate_2 () = default;
+
+TEST_OFF
+{
+        an_aggregate_1 a1{}; cout << a1.i << endl;
+        an_aggregate_2 a2{}; cout << a2.i << endl;
+//  not_an_aggregate_1 b1{}; cout << b1.i << endl; // warning C26495: Variable is uninitialized
+//  not_an_aggregate_2 b2{}; cout << b2.i << endl; // warning C26495: Variable is uninitialized
+//  not_an_aggregate_2 c = {.i = 0}; // C designated initializers aren’t supported in C++ until C++20
+    
 };
 
-int main() {
-    A a = {.i = 0}; // C designated initializers aren’t supported in C++ until C++20
-    std::cout << a.i << std::endl;
-}*/

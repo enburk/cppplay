@@ -17,6 +17,16 @@ void sleepsort (std::vector<int> & vector, int microseconds)
     for (auto & thread : threads) thread.join ();
 }
 
+
+template <
+typename I,
+typename C = std::less<>
+>
+void factorial_sort (I f, I l, C compare = C {}) // O ((N+1)!)
+{
+    while (std::next_permutation(f, l, compare));
+}
+
 TEST_OFF
 {
     std::vector<int> v0 = random (10, 20);

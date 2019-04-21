@@ -1,4 +1,5 @@
 // possible implementation of std::rotate
+// https://en.cppreference.com/w/cpp/algorithm/rotate
 
 template <typename I> // ForwardIterator 
 
@@ -113,8 +114,46 @@ TEST_OFF
 // w r
 // E D
 
+template <typename I> // ForwardIterator 
 
-// CppCon 2015: Sean Parent "Better Code: Data Structures"
-// 1. rotate realisation by reverse
-// 2. reverse realisation by rotate - n log n for forward iterators
-// 3. forward iterational rotate might be faster then bidirectional and even random (because of cache)
+auto test_rotate_(I first, I will_be_first, I last) -> I 
+{
+   if (will_be_first == first) return last;
+   if (will_be_first == last) return first;
+ 
+   I read      = will_be_first;
+   I write     = first;
+   I next_read = first; // read position for when "read" hits "last"
+ 
+   while (read != last) {
+      if (write == next_read) next_read = read; // track where "first" went
+      std::iter_swap (write++, read++);
+   }
+ 
+   // rotate the remaining sequence into place
+   return test_rotate_(write, next_read, last);
+}
+
+TEST_OFF
+{
+    std::vector<char> v0 (10'000);
+
+    std::iota (v0.begin (), v0.end (), 0);
+
+    auto v1 = v0, v2 = v0; 
+
+    Time t0; test_rotate_(v1.begin(), v1.begin()+v0.size()/3, v1.end());
+    Time t1; std::rotate (v2.begin(), v2.begin()+v0.size()/3, v2.end());
+    Time t2;
+
+    cout << "test_rotate " << t1-t0 << " sec" << endl;
+    cout << "std::rotate " << t2-t1 << " sec" << endl;
+    cout <<  endl;
+
+    assert (v1 == v2);
+};
+
+// Possible output:
+// 
+// test_rotate 0.000'169'967 sec
+// std::rotate 0.000'001'232 sec

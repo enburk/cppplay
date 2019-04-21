@@ -11,20 +11,20 @@ TEST_OFF
     const auto i10   {42}; // int (C++14), std::initializer_list<int> (C++11)
     const auto i11 = {42}; CHECK_TYPE (i11, const std::initializer_list<int>);
 
-    oops ( TestCtor t;         ), {"TestCtor (int n = 0)", "-------"});
-    oops ( TestCtor t = 42;    ), {"TestCtor (int n = 0)", "-------"});
+    oops ( TestCtor t;         ) {"TestCtor (int n = 0)", "-------"};
+    oops ( TestCtor t = 42;    ) {"TestCtor (int n = 0)", "-------"};
 
-//  oops ( TestCtor t   ();    ), {"TestCtor (int n = 0)", "-------"}); // it's a function
-    oops ( TestCtor t   (1);   ), {"TestCtor (int n = 0)", "-------"});
-    oops ( TestCtor t   (1,2); ), {"TestCtor (int n1, int n2)", "-------"});
+//  oops ( TestCtor t   ();    ) {"TestCtor (int n = 0)", "-------"}; // it's a function
+    oops ( TestCtor t   (1);   ) {"TestCtor (int n = 0)", "-------"};
+    oops ( TestCtor t   (1,2); ) {"TestCtor (int n1, int n2)", "-------"};
 
-    oops ( TestCtor t   {};    ), {"TestCtor (int n = 0)", "-------"});
-    oops ( TestCtor t   {1};   ), {"TestCtor (std::initializer_list<int>)", "-------"});
-    oops ( TestCtor t   {1,2}; ), {"TestCtor (std::initializer_list<int>)", "-------"});
+    oops ( TestCtor t   {};    ) {"TestCtor (int n = 0)", "-------"};
+    oops ( TestCtor t   {1};   ) {"TestCtor (std::initializer_list<int>)", "-------"};
+    oops ( TestCtor t   {1,2}; ) {"TestCtor (std::initializer_list<int>)", "-------"};
 
-    oops ( TestCtor t = {};    ), {"TestCtor (int n = 0)", "-------"});
-    oops ( TestCtor t = {1};   ), {"TestCtor (std::initializer_list<int>)", "-------"});
-    oops ( TestCtor t = {1,2}; ), {"TestCtor (std::initializer_list<int>)", "-------"});
+    oops ( TestCtor t = {};    ) {"TestCtor (int n = 0)", "-------"};
+    oops ( TestCtor t = {1};   ) {"TestCtor (std::initializer_list<int>)", "-------"};
+    oops ( TestCtor t = {1,2}; ) {"TestCtor (std::initializer_list<int>)", "-------"};
 
     using std::vector;
     using std::string;
@@ -43,6 +43,14 @@ TEST_OFF
 };
 
 inline static std::vector<size_t> mallocs;
+/* fatal error C1001: An internal error has occurred in the compiler.
+
+template <class type> struct mallocounter
+{
+    type * allocate(size_t n) { mallocs.push_back (n); return new type [n]; }
+    void deallocate(type * p, size_t) noexcept { delete [] p; }
+};
+*/
 
 template <class T> struct mallocounter
 {

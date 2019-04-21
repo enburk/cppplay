@@ -30,14 +30,14 @@ inline std::ostream & operator << (std::ostream & stream, std::chrono::high_reso
     return stream;
 }
 
-inline int randint
+template <typename Int = int> Int randint
 (
-    int l = std::numeric_limits<int>::min (),
-    int u = std::numeric_limits<int>::max ())
+    Int l = std::numeric_limits<Int>::min (),
+    Int u = std::numeric_limits<Int>::max ())
 {
     thread_local std::random_device seed;
     thread_local std::mt19937 generator (seed ());
-    return std::uniform_int_distribution<int> (l, u) (generator);
+    return std::uniform_int_distribution (l, u) (generator);
 //  thread_local specifier implies the static specifier
 //  https://stackoverflow.com/questions/185624/static-variables-in-an-inlined-function
 //  A static local variable in an extern inline function always refers to the same object.

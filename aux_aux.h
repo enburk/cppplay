@@ -19,31 +19,15 @@
 using std::cout;
 using std::endl;
 
-namespace detail
-{
-    struct Filename
-    {
-        static std::string & text() noexcept {
-        static std::string text_; return text_; }
-        Filename (const char * s) { text() = s; }
-    };
+struct TestTitle { TestTitle (const char * s) { cout << endl << s << endl << endl; } };
 
-    struct TestClass
-    {
-        template<class Test> TestClass (Test test)
-        {
-            cout << endl << Filename::text() << endl << endl;
-            test ();
-        }
-    };
-}
+struct TestClass { template<class Test> TestClass (Test test) { test (); } };
 
 #define CONCAt(x,y) x##y
 #define CONCAT(x,y) CONCAt (x,y)
 
-#define TEST_OFF inline auto              CONCAT (Test,__COUNTER__) = []() noexcept(false) 
-#define TEST_ON  inline detail::Filename  CONCAT (Test,__COUNTER__) = __FILE__; \
-                 inline detail::TestClass CONCAT (Test,__COUNTER__) = []() noexcept(false) 
+#define TEST_OFF inline auto      CONCAT (Test,__COUNTER__) = []() noexcept(false) 
+#define TEST_ON  inline TestClass CONCAT (Test,__COUNTER__) = [](TestTitle =__FILE__) noexcept(false) 
 
 #pragma warning(disable : 26426) // Global initializer calls a non-constexpr function
 
@@ -56,9 +40,10 @@ TEST_OFF
     TESt (cout << "Test how test works."); cout << endl;
 };
 
-// Disable some warnings for keeping tests less verbose
+// Disable some warnings to keep tests less verbose
 #pragma warning(disable : 26496) // The variable is assigned only once, mark it as const
 #pragma warning(disable : 26439) // This kind of function may not throw. Declare it 'noexcept'
+#pragma warning(disable : 26455) // Default constructor may not throw. Declare it 'noexcept'
 
 // VS 2017 stable false positives:
 #pragma warning(disable : 26486)

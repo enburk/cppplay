@@ -30,11 +30,11 @@ inline auto sorted = [] (int n, double k = 1.0)
 TEST_OFF
 {
     using Test = Test<std::vector<int>>; std::vector<Test> tests;
-    tests.emplace_back (Test::Function (random, std::tuple{5},        "random       "));
-    tests.emplace_back (Test::Function (random, std::tuple{30, 0, 5}, "few unique   "));
-    tests.emplace_back (Test::Function (sorted, std::tuple{25},       "sorted       "));
-    tests.emplace_back (Test::Function (sorted, std::tuple{25, -1.0}, "reversed     "));
-    tests.emplace_back (Test::Function (sorted, std::tuple{25,  0.8}, "nearly sorted"));
+    tests.emplace_back ("random       ", random, 5);
+    tests.emplace_back ("few unique   ", random, 30, 0, 5);
+    tests.emplace_back ("sorted       ", sorted, 25);
+    tests.emplace_back ("reversed     ", sorted, 25);
+    tests.emplace_back ("nearly sorted", sorted, 25);
 
     for (auto test : tests)
     {

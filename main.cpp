@@ -1,6 +1,7 @@
-#include "../include/cpp_algos.h"
-#include "../include/cpp_optim.h"
-#include "../include/cpp_tricky.h"
+#include "aux_aux.h"
+#include "cpp_algorithms.h"
+#include "cpp_optimum.h"
+#include "cpp_tricky.h"
 
 // #include "../include/cpp_data.h"
 // #include "../include/cpp_fast.h"
@@ -34,9 +35,3 @@
 // };
 
 int main () noexcept(false) { return 0; }
-
-// #include "../include/test_aux.h"
-// #include "../include/test_aux_chrono.h"
-// #include "../include/test_inheritance.h"
-// #include "../include/test_quicksort.h"
-

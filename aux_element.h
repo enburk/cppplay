@@ -76,9 +76,9 @@ TEST_OFF
 
     using std::vector;
 
-    oops ( vector<element> v; v.emplace_back ('1'); ), { "ctor: 1", "-------", "dtor: 1" });
-//  oops ( vector<element> v; v.   push_back ('1'); ), { "ctor: 1", "-------", "dtor: 1" }); // print error log and exit
-    oops ( vector<element> v; v.   push_back ('1'); ), { "ctor: 1", "move: 1", "dtor: ", "-------", "dtor: 1" });
+    oops ( vector<element> v; v.emplace_back ('1'); ) { "ctor: 1", "-------", "dtor: 1" };
+//  oops ( vector<element> v; v.   push_back ('1'); ) { "ctor: 1", "-------", "dtor: 1" }; // print error log and exit
+    oops ( vector<element> v; v.   push_back ('1'); ) { "ctor: 1", "move: 1", "dtor: ", "-------", "dtor: 1" };
 };
 
 TEST_OFF

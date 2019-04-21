@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="include\aux_aux.h" />
-    <ClInclude Include="include\aux_chrono.h" />
-    <ClInclude Include="include\aux_log.h" />
     <ClInclude Include="include\cpp_data.h" />
     <ClInclude Include="include\cpp_math.h" />
     <ClInclude Include="include\cpp_meta.h" />
@@ -24,7 +21,6 @@
     <ClInclude Include="include\cpp_trap_forward.h" />
     <ClInclude Include="include\cpp_sync_signal.h" />
     <ClInclude Include="include\cpp_data_alignment.h" />
-    <ClInclude Include="include\aux_element.h" />
     <ClInclude Include="include\cpp_trap_references.h" />
     <ClInclude Include="include\cpp_data_access.h" />
     <ClInclude Include="include\cpp_sync_spinlock.h" />
@@ -56,69 +52,91 @@
     <ClInclude Include="include\cpp_meta_auto.h" />
     <ClInclude Include="include\cpp_math_gcd_history.h" />
     <ClInclude Include="include\cpp_fast_ctor_dtor.h" />
-    <ClInclude Include="include\cpp_algos\sort.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\sort_classical.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort_classical.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\sort_counting.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort_counting.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\sort_heapsort.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort_heapsort.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\sort_partial.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort_partial.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\sort_quicksort.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort_quicksort.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\sort_sleepsort.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort_sleepsort.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\sort_stable.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\sort_stable.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\std.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\std_get_temporary_buffer.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\std_rotate.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\std_rotate.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos\std_stable_partition.h">
-      <Filter>cpp_algos</Filter>
+    <ClInclude Include="cpp_algorithms\std_rotate_reverse.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_algos.h" />
-    <ClInclude Include="include\aux_test.h" />
-    <ClInclude Include="include\cpp_tricky.h" />
-    <ClInclude Include="include\cpp_tricky\tricky_conversion.h">
+    <ClInclude Include="cpp_algorithms\std_stable_partition.h">
+      <Filter>cpp_algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="aux_aux.h" />
+    <ClInclude Include="aux_chrono.h" />
+    <ClInclude Include="aux_element.h" />
+    <ClInclude Include="aux_log.h" />
+    <ClInclude Include="aux_test.h" />
+    <ClInclude Include="aux_type.h" />
+    <ClInclude Include="cpp_algorithms.h" />
+    <ClInclude Include="cpp_optimum\copy_elision.h">
+      <Filter>cpp_optimum</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp_tricky\tricky_conversion.h">
       <Filter>cpp_tricky</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_tricky\tricky_initialization.h">
+    <ClInclude Include="cpp_tricky\tricky_initialization.h">
       <Filter>cpp_tricky</Filter>
     </ClInclude>
-    <ClInclude Include="include\aux_type.h" />
-    <ClInclude Include="include\cpp_optim.h" />
-    <ClInclude Include="include\cpp_tricky\tricky_initializer_list.h">
+    <ClInclude Include="cpp_tricky\tricky_initializer_list.h">
       <Filter>cpp_tricky</Filter>
     </ClInclude>
-    <ClInclude Include="include\cpp_optim\optim_copy_elision.h">
-      <Filter>cpp_optim</Filter>
+    <ClInclude Include="cpp_tricky\tricky_integer_overflow.h">
+      <Filter>cpp_tricky</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp_optimum.h" />
+    <ClInclude Include="cpp_tricky.h" />
+    <ClInclude Include="cpp_algorithms\sort_introsort.h">
+      <Filter>cpp_algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp_algorithms\std.h">
+      <Filter>cpp_algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp_tricky\callables.h">
+      <Filter>cpp_tricky</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp_algorithms\string_trim.h">
+      <Filter>cpp_algorithms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="include\test.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="cpp_algos">
-      <UniqueIdentifier>{ca7dbcab-88bc-4532-a2b8-70375eacef61}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cpp_tricky">
       <UniqueIdentifier>{9043e21b-05b0-416f-bcb0-88d33ca81c32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cpp_optim">
+    <Filter Include="cpp_algorithms">
+      <UniqueIdentifier>{26629ae4-ea4f-4bb7-a3f4-d5133868698f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp_optimum">
       <UniqueIdentifier>{219c4a54-a51d-4dfe-9f5d-dd9b2739c81f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
