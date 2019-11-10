@@ -9,7 +9,7 @@ TEST_OFF
 {
     // CppCon 2018: Nicolai Josuttis “The Nightmare of Initialization in C++”
     const auto i10   {42}; // int (C++14), std::initializer_list<int> (C++11)
-    const auto i11 = {42}; CHECK_TYPE (i11, const std::initializer_list<int>);
+    const auto i11 = {42}; ///CHECK_TYPE (i11, const std::initializer_list<int>);
 
     oops ( TestCtor t;         ) {"TestCtor (int n = 0)", "-------"};
     oops ( TestCtor t = 42;    ) {"TestCtor (int n = 0)", "-------"};
@@ -40,6 +40,15 @@ TEST_OFF
     TESt ( vector<string> v = {{"1","2","3"}}; cout << v << endl; ); // 1 2 3
 //  TESt ( vector<string> v = {{{"1","2"}}};   cout << v << endl; ); // run-time error (pair of iterators)
 //  TESt ( vector<string> v = {{"1","2"}};     cout << v << endl; ); // run-time error (pair of iterators)
+
+    // CppCon 2018: Timur Doumler “Class template argument deduction in C++17”
+    std::tuple t1 {"abc", 123, true};
+    std::tuple t2 {t1}; // std::tuple<const char *,int,bool>
+//  std::tuple t3 {t1, t1};
+//  VS 2019:
+//  error C3538:  in a declarator-list 'std::tuple' must always deduce to the same type
+//  could be 'std::tuple<const char *,int,bool>'
+//  or       'std::tuple<std::tuple<const char *,int,bool>,std::tuple<const char *,int,bool>>'
 };
 
 inline static std::vector<size_t> mallocs;

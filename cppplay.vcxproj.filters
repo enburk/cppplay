@@ -124,6 +124,12 @@
     <ClInclude Include="cpp_algorithms\string_trim.h">
       <Filter>cpp_algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="cpp_tricky\tricky_lifetime.h">
+      <Filter>cpp_tricky</Filter>
+    </ClInclude>
+    <ClInclude Include="cpp_tricky\tricky_range_for.h">
+      <Filter>cpp_tricky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\test.cpp" />

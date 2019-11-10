@@ -14,4 +14,5 @@ namespace tricky
     #include "cpp_tricky/tricky_initialization.h"
     #include "cpp_tricky/tricky_initializer_list.h"
     #include "cpp_tricky/tricky_integer_overflow.h"
+    #include "cpp_tricky/tricky_lifetime.h"
 }

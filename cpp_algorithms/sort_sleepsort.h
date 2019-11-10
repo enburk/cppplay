@@ -1,35 +1,25 @@
 #include <mutex>
 #include <thread>
 
-void sleepsort (std::vector<int> & vector, int microseconds)
+void sleepsort (std::vector<int> & data, int microseconds)
 {
-    int i = 0; std::vector<std::thread> threads; std::mutex mutex; auto procedure = [&](int value)
+    std::mutex mutex;
+    std::vector<std::thread> threads;
+    int i = 0; auto procedure = [&](int value)
     {
         std::this_thread::sleep_for (std::chrono::microseconds (value * microseconds));
             
-        std::lock_guard<std::mutex> lock (mutex);
+        std::lock_guard lock{mutex};
             
-        vector [i++] = value;
+        data.at(i++) = value;
     };
-
-    for (int value : vector) threads.emplace_back (std::thread (procedure, value));
-
+    for (int value : data) threads.emplace_back (std::thread (procedure, value));
     for (auto & thread : threads) thread.join ();
-}
-
-
-template <
-typename I,
-typename C = std::less<>
->
-void factorial_sort (I f, I l, C compare = C {}) // O ((N+1)!)
-{
-    while (std::next_permutation(f, l, compare));
 }
 
 TEST_OFF
 {
-    std::vector<int> v0 = random (10, 20);
+    std::vector<int> v0 = random (20, 10, 29);
 
     for (int us = 0; us <= 5000; us += 500)
     {
@@ -56,3 +46,28 @@ TEST_OFF
 // 11 10 11 13 12 13 15 15 17 18 17 18 20 21 22 24 25 25 26 28 *4000 wrong
 // 10 11 11 12 13 13 15 15 17 17 18 18 20 21 22 24 25 25 26 28 *4500 correct
 // 10 11 11 12 13 13 15 15 17 17 18 18 20 21 22 24 25 25 26 28 *5000 correct
+
+template <
+typename I,
+typename C = std::less<>
+>
+void factorial_sort (I f, I l, C compare = C {}) // O ((N+1)!)
+{
+    while (std::next_permutation(f, l, compare));
+}
+
+TEST_ON
+{
+    for (int nn = 10; nn < 20; nn++)
+    {
+        std::vector<int> v = random(nn);
+
+        Time t0; factorial_sort (v.begin(), v.end());
+        Time t1;
+
+        bool correct = std::is_sorted (v.begin (), v.end ());
+        
+        cout << "factorial_sort of " << nn << " elements: " <<  t1-t0 << " sec";
+        cout << (correct ? ", correct" : ", wrong") << endl;
+    }
+};

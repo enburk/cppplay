@@ -37,9 +37,9 @@ TEST_OFF
     CHECK_TYPE (c, const int);
     CHECK_TYPE (r, const int &);
 
-    cout << endl << type_name<decltype(detail::log::mutex)>() << endl;
-    cout << endl << type_name<decltype(detail::log::print)>() << endl;
-    cout << endl << type_name<decltype(detail::log::Log  )>() << endl;
+//    cout << endl << type_name<decltype(detail::log::mutex)>() << endl;
+//    cout << endl << type_name<decltype(detail::log::print)>() << endl;
+//    cout << endl << type_name<decltype(detail::log::Log  )>() << endl;
 };
 
 // Output:

@@ -26,7 +26,7 @@ struct TestClass { template<class Test> TestClass (Test test) { test (); } };
 #define CONCAt(x,y) x##y
 #define CONCAT(x,y) CONCAt (x,y)
 
-#define TEST_OFF inline auto      CONCAT (Test,__COUNTER__) = []() noexcept(false) 
+#define TEST_OFF inline auto      CONCAT (Test,__COUNTER__)   () noexcept(false) 
 #define TEST_ON  inline TestClass CONCAT (Test,__COUNTER__) = [](TestTitle =__FILE__) noexcept(false) 
 
 #pragma warning(disable : 26426) // Global initializer calls a non-constexpr function

@@ -1,4 +1,4 @@
-TEST_OFF
+TEST_ON
 {
     oops ( element e        ;     ) { "ctor: _", "-------", "dtor: _" };
 //  oops ( element e   ()   ;     ) {            "-------"            }; // it's a function!
@@ -29,7 +29,8 @@ TEST_OFF
     
         auto i09  = 42;  // int
         auto i10   {42}; // int (C++14), std::initializer_list<int> (C++11)
-        auto i11 = {42}; CHECK_TYPE (i11, std::initializer_list<int>);
+        auto i11 = {42}; ///CHECK_TYPE (i11, std::initializer_list<int>);
+    //cout << endl << type_name<decltype(i11)>() << endl;
         auto i12 = int{42}; // int
     
         int  i13 (); // declares a function

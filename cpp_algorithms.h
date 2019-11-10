@@ -13,7 +13,7 @@ namespace algorithms
     #include "cpp_algorithms/sort_heapsort.h"
     #include "cpp_algorithms/sort_quicksort.h"
 //    #include "cpp_algorithms/sort_introsort.h"
-//    #include "cpp_algorithms/sort_sleepsort.h"
+    #include "cpp_algorithms/sort_sleepsort.h"
 //    #include "cpp_algorithms/sort_partial.h"
 //    #include "cpp_algorithms/sort_stable.h"
 

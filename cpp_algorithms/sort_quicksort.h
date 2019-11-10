@@ -54,13 +54,27 @@ typename C = std::less<>
 void quicksort2 (I first, I last, C compare = C {})
 {
     auto const N = std::distance(first, last); if (N <= 1) return; 
-    auto const pivot = std::next(first, N / 2); // deterministic
-    std::nth_element(first, pivot, last, compare);
-    quicksort2(first, pivot, compare); 
-    quicksort2(pivot,  last, compare); 
+    auto const pivot = *std::next(first, N / 2); // deterministic
+    auto middle1 = std::partition(first, last, [pivot](const auto& em){ return em < pivot; });
+    auto middle2 = std::partition(middle1, last, [pivot](const auto& em){ return !(pivot < em); });
+    quicksort2(first, middle1, compare); 
+    quicksort2(middle2,  last, compare); 
 }
 
-TEST_ON
+template <
+typename I,
+typename C = std::less<>
+>
+void quicksort3 (I first, I last, C compare = C {})
+{
+    auto const N = std::distance(first, last); if (N <= 1) return; 
+    auto const pivot = std::next(first, N / 2); // median
+    std::nth_element(first, pivot, last, compare);
+    quicksort3(first, pivot, compare); 
+    quicksort3(pivot,  last, compare); 
+}
+
+TEST_OFF
 {
     auto organ_pipes = [] (int n)
     {
@@ -71,56 +85,87 @@ TEST_ON
 
     using Test = Test<std::vector<int>>; std::vector<Test> tests;
     tests.emplace_back ("random       ", random,    1'000'000);
-    tests.emplace_back ("few unique   ", random,      250'000, 0,99); // quicksort pitfall
+    tests.emplace_back ("few unique   ", random,      250'000, 0,99);
     tests.emplace_back ("sorted       ", sorted,    1'000'000);
     tests.emplace_back ("reversed     ", sorted,    1'000'000, -1.0);
-    tests.emplace_back ("nearly sorted", sorted,    1'000'000,  0.8); // std::sort advantage
+    tests.emplace_back ("nearly sorted", sorted,    1'000'000,  0.8);
     tests.emplace_back ("organ pipes  ", organ_pipes, 250'000);
 
     for (const Test & test : tests)
     {
         cout << test.description () << endl << endl;
 
-        auto v0 = test.sample_data (); auto v1 = v0, v2 = v0, v3 = v0, v4 = v0; 
+        auto v0 = test.sample_data ();
+        auto v1 = v0, v2 = v0, v3 = v0, v4 = v0, v5 = v0; 
 
         Time t0; quicksort  (v1);
         Time t1; quicksort1 (v2.begin (), v2.end ());
         Time t2; quicksort2 (v3.begin (), v3.end ());
-        Time t3; std::sort  (v4.begin (), v4.end ());
-        Time t4;
+        Time t3; quicksort3 (v4.begin (), v4.end ());
+        Time t4; std::sort  (v5.begin (), v5.end ());
+        Time t5;
 
         cout << "quicksort: " << t1-t0 << " sec" << endl;
-        cout << "quicksort: " << t2-t1 << " sec (nth_element)" << endl;
+        cout << "quicksort: " << t2-t1 << " sec (modern)" << endl;
         cout << "quicksort: " << t3-t2 << " sec (deterministic)" << endl;
-        cout << "std::sort: " << t4-t3 << " sec" << endl;
+        cout << "quicksort: " << t4-t3 << " sec (median)" << endl;
+        cout << "std::sort: " << t5-t4 << " sec" << endl;
         cout << endl;
 
         assert (std::is_sorted (v1.begin(), v1.end()));
         assert (std::is_sorted (v2.begin(), v2.end()));
         assert (std::is_sorted (v3.begin(), v3.end()));
         assert (std::is_sorted (v4.begin(), v4.end()));
+        assert (std::is_sorted (v5.begin(), v5.end()));
     }
 };
 
 // Possible output:
 // 
-// 60 82 21 23 69 37 64 22 23 28 43 68 51 82 34 34 32 64 16 90 57 26 98 94 67
-// 16 21 22 23 23 26 28 32 34 34 37 43 51 57 60 64 64 67 68 69 82 82 90 94 98
-// 16 21 22 23 23 26 28 32 34 34 37 43 51 57 60 64 64 67 68 69 82 82 90 94 98
-// quicksort: 0.000'001'643 sec
-// std::sort: 0.000'000'821 sec
+// random
 // 
-// 1'000'000 ints
-// quicksort: 0.117'334'995 sec
-// std::sort: 0.089'499'536 sec
-// par_unseq: 0.018'987'362 sec
+// quicksort: 0.105'935'482 sec
+// quicksort: 0.117'005'471 sec (modern)
+// quicksort: 0.082'582'751 sec (deterministic)
+// quicksort: 0.105'585'696 sec (median)
+// std::sort: 0.082'564'687 sec
 // 
-// quicksort pitfall on many duplicates
-// quicksort: 0.230'974'662 sec
-// std::sort: 0.007'090'959 sec
-// par_unseq: 0.003'158'744 sec
+// few unique
 // 
-// std::sort advantage on partially sorted array
-// quicksort: 0.060'318'305 sec
-// std::sort: 0.016'985'949 sec
-// par_unseq: 0.004'460'176 sec
+// quicksort: 0.205'736'572 sec
+// quicksort: 0.005'445'084 sec (modern)
+// quicksort: 0.005'690'181 sec (deterministic)
+// quicksort: 0.010'876'621 sec (median)
+// std::sort: 0.006'331'865 sec
+// 
+// sorted
+// 
+// quicksort: 0.047'344'685 sec
+// quicksort: 0.060'992'087 sec (modern)
+// quicksort: 0.015'923'884 sec (deterministic)
+// quicksort: 0.021'907'607 sec (median)
+// std::sort: 0.011'404'583 sec
+// 
+// reversed
+// 
+// quicksort: 0.050'662'315 sec
+// quicksort: 0.062'636'738 sec (modern)
+// quicksort: 0.016'007'636 sec (deterministic)
+// quicksort: 0.032'087'529 sec (median)
+// std::sort: 0.013'980'355 sec
+// 
+// nearly sorted
+// 
+// quicksort: 0.076'498'445 sec
+// quicksort: 0.085'507'488 sec (modern)
+// quicksort: 0.045'291'539 sec (deterministic)
+// quicksort: 0.082'542'928 sec (median)
+// std::sort: 0.061'732'714 sec
+// 
+// organ pipes
+// 
+// quicksort: 0.011'699'356 sec
+// quicksort: 0.014'114'194 sec (modern)
+// quicksort: 0.230'671'552 sec (deterministic)
+// quicksort: 0.012'643'615 sec (median)
+// std::sort: 0.007'100'409 sec
